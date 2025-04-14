@@ -33,23 +33,32 @@
       color: #28a745;
       border-bottom: 1px solid #ccc;
     }
-    .about-photo {
-      text-align: center;
-      margin: 30px auto 0;
-    }
-    .about-photo img {
-      width: 300px;
-      max-width: 90%;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    .section-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    .main-content {
+      display: flex;
+      flex-wrap: wrap;
       gap: 20px;
-      max-width: 1000px;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 1100px;
       margin: 30px auto;
       padding: 0 20px;
+    }
+    .photo-column {
+      flex: 1 1 250px;
+      text-align: center;
+    }
+    .photo-column img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+    .section-container {
+      flex: 2 1 500px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
     }
     .section {
       background-color: #ffffff;
@@ -116,48 +125,58 @@
   </header>
 
   <div class="countdown">
-    Countdown to Horse Show: <span id="timer"></span>
+    Kentucky Derby Countdown: <span id="timer"></span>
   </div>
 
-  <div class="about-photo">
-    <img src="unnamed.jpg" alt="Olivia riding her horse proudly" />
-  </div>
-
-  <div class="section-container">
-    <div class="section">
-      <h2>🎠 Game Overview</h2>
-      <ul>
-        <li>10×10 grid = 100 squares</li>
-        <li>No payment needed — just pick a square to support Olivia!</li>
-        <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
-      </ul>
+  <div class="main-content">
+    <div class="photo-column">
+      <img src="unnamed.jpg" alt="Olivia riding her horse proudly" />
+      <img src="unnamed2.jpg" alt="Olivia riding her horse smiling" />
     </div>
 
-    <div class="section">
-      <h2>🏇 How to Win</h2>
-      <ul>
-        <li>Winning square is based on the last digit of Olivia’s competition results</li>
-        <li>Columns = 1st place results</li>
-        <li>Rows = 2nd place results</li>
-        <li>Example: If Olivia places 1st in class #12 and 2nd in class #4 → square (2,4) wins</li>
-      </ul>
-    </div>
+    <div class="section-container">
+      <div class="section">
+        <h2>🎠 Game Overview</h2>
+        <ul>
+          <li>10×10 grid = 100 squares</li>
+          <li>$10 per square</li>
+          <li>$500 to the winner</li>
+          <li>$500 goes towards show season</li>
+          <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
+        </ul>
+      </div>
 
-    <div class="section">
-      <h2>📝 How to Join</h2>
-      <ul>
-        <li>Pick your square(s) below</li>
-        <li>Enter your name when prompted</li>
-        <li>That’s it! You’ll be part of the journey ❤️</li>
-      </ul>
-    </div>
+      <div class="section">
+        <h2>🥇 Multiple Ways to Win</h2>
+        <ul>
+          <li>Your square can win in 4 different ways:</li>
+          <li>For square (2, 4), you'd win if:</li>
+          <li>🥇 Horse #2 and 🥈 Horse #4</li>
+          <li>🥇 Horse #2 and 🥈 Horse #14</li>
+          <li>🥇 Horse #12 and 🥈 Horse #4</li>
+          <li>🥇 Horse #12 and 🥈 Horse #14</li>
+        </ul>
+      </div>
 
-    <div class="section">
-      <h2>🥇 Multiple Ways to Win</h2>
-      <ul>
-        <li>Your square can win in multiple categories Olivia competes in</li>
-        <li>We’ll draw winners for each event with prizes or shout-outs</li>
-      </ul>
+      <div class="section">
+        <h2>📝 How to Join</h2>
+        <ul>
+          <li>Pick your square(s) on the grid below</li>
+          <li>Fill out the quick form that pops up</li>
+          <li>Venmo @Magen-Newman-1 $10 per square</li>
+          <li>Add a 🐎 emoji and your email in the Venmo note</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>🏇 How to Win</h2>
+        <ul>
+          <li>Winning square is based on the last digit of Olivia’s competition results</li>
+          <li>Columns = 1st place results</li>
+          <li>Rows = 2nd place results</li>
+          <li>Example: If Olivia places 1st in class #12 and 2nd in class #4 → square (2,4) wins</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -195,7 +214,7 @@
     }
 
     function startCountdown() {
-      const showDate = new Date("2025-06-21T08:00:00-05:00");
+      const showDate = new Date("2025-05-03T18:00:00-04:00");
       const timerSpan = document.getElementById('timer');
       function updateTimer() {
         const now = new Date();
