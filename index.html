@@ -1,344 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Olivia's Horse Show Season Fundraiser</title>
+  <meta charset="UTF-8" />
+  <title>Horse Show Fundraiser Grid</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 0;
-      color: #333;
+    /* Basic table styling */
+    table {
+      border-collapse: collapse;
+      margin: 1em 0;
     }
-    header {
-      background-color: #007bff;
-      color: white;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-    }
-    header img {
-      width: 80px;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    header .text {
+    th, td {
+      border: 1px solid #333;
+      padding: 0.5em;
       text-align: center;
     }
-    .text h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-    .countdown {
-      background-color: #ffffff;
-      padding: 15px;
-      text-align: center;
-      font-size: 24px;
-      color: #28a745;
-      border-bottom: 1px solid #ccc;
-    }
-    .section-rows {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 0 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-    .section {
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      flex: 1 1 300px;
-    }
-    .section h2 {
-      color: #155724;
-    }
-    .section ul {
-      text-align: left;
-      padding-left: 20px;
-      margin: 0;
-    }
-    .section li {
-      margin-bottom: 8px;
-    }
-    #grid-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 30px auto;
-      overflow-x: auto;
-    }
-    #grid-wrapper {
-      display: grid;
-      grid-template-columns: 30px repeat(10, 1fr);
-    }
-    .row-label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #f1f1f1;
-      font-weight: bold;
-      border: 1px solid #ccc;
-    }
-    .col-labels {
-      display: grid;
-      grid-template-columns: 30px repeat(10, 1fr);
+    /* Top gold banner cell */
+    .gold-banner {
+      background: gold;
       font-weight: bold;
       text-align: center;
+      font-size: 1.1em;
     }
-    .col-labels div {
-      border: 1px solid #ccc;
-      background-color: #f1f1f1;
-      padding: 5px 0;
+    /* Left silver banner cell */
+    .silver-banner {
+      background: silver;
+      font-weight: bold;
+      text-align: center;
+      vertical-align: middle;  /* center vertically in the spanned rows */
+      /* We use <br> for line breaks, so text will already be stacked. */
     }
+    /* Column and row label cells (digits) */
+    .col-label, .row-label {
+      font-weight: bold;
+      background: #f0f0f0;
+    }
+    /* Unclaimed square cells */
     .square {
-      width: 60px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #e9ecef;
-      border: 1px solid #ccc;
+      width: 3em;
+      height: 3em;
       cursor: pointer;
     }
-    .square:hover {
-      background-color: #d4e3f9;
+    /* Claimed square cells */
+    .claimed {
+      background: #4CAF50;   /* green background for claimed */
+      color: #fff;           /* white text for contrast */
+      font-weight: bold;
     }
-    .square.filled {
-      background-color: #6cace4;
-      color: white;
-      cursor: not-allowed;
-    }
-    #modal {
+    /* Modal overlay */
+    .modal {
+      display: none; /* Hidden by default */
       position: fixed;
-      top: 0;
+      z-index: 1000; /* on top of other content */
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-    #modalContent {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 400px;
-      text-align: left;
-    }
-    #modalContent h3 {
-      margin-top: 0;
-    }
-    #modalContent input {
+      top: 0;
       width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);  /* semi-transparent black */
     }
-    #modalContent button {
-      padding: 10px 15px;
-      margin-right: 10px;
-      border: none;
+    /* Modal content box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
       border-radius: 4px;
-      background-color: #28a745;
-      color: white;
+      position: relative;
+    }
+    /* Close button (X) */
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
       cursor: pointer;
     }
-    #modalContent .cancel {
-      background-color: #ccc;
+    .close:hover {
+      color: #000;
     }
-    footer {
-      background-color: #f1f1f1;
-      padding: 15px;
-      font-size: 14px;
-      color: #666;
-      text-align: center;
+    /* Highlighted winner square (in example modal grid) */
+    .winner {
+      border: 3px solid gold; /* gold border to highlight winning square */
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="olivia1.jpg" alt="Olivia">
-    <div class="text">
-      <h1>Olivia's Horse Show Season Fundraiser</h1>
-    </div>
-  </header>
 
-  <div class="countdown">
-    Kentucky Derby Countdown: <span id="timer"></span>
+  <!-- Instructions (example text) -->
+  <p>Select a square in the grid below to claim it with your initials. Once all squares are claimed, the winners will be determined by the last digits of the 1st and 2nd place horses.</p>
+
+  <!-- Fundraiser Grid Table -->
+  <table id="fundraiser-grid">
+    <!-- Gold banner across top -->
+    <tr>
+      <th></th>  <!-- empty top-left cell -->
+      <th colspan="10" class="gold-banner">🥇 1st PLACE HORSE WINNER</th>
+    </tr>
+    <!-- Top column labels 0-9 -->
+    <tr>
+      <th></th>  <!-- empty cell under top-left (above silver banner column) -->
+      <th class="col-label">0</th>
+      <th class="col-label">1</th>
+      <th class="col-label">2</th>
+      <th class="col-label">3</th>
+      <th class="col-label">4</th>
+      <th class="col-label">5</th>
+      <th class="col-label">6</th>
+      <th class="col-label">7</th>
+      <th class="col-label">8</th>
+      <th class="col-label">9</th>
+    </tr>
+    <!-- Grid rows 0-9 -->
+    <tr>
+      <!-- Silver banner spanning all rows on the left -->
+      <th rowspan="10" class="silver-banner">🥈 2nd<br>PLACE<br>HORSE<br>WINNER</th>
+      <th class="row-label">0</th>
+      <!-- 10 square cells for row 0 -->
+      <td class="square" data-row="0" data-col="0"></td>
+      <td class="square" data-row="0" data-col="1"></td>
+      <td class="square" data-row="0" data-col="2"></td>
+      <td class="square" data-row="0" data-col="3"></td>
+      <td class="square" data-row="0" data-col="4"></td>
+      <td class="square" data-row="0" data-col="5"></td>
+      <td class="square" data-row="0" data-col="6"></td>
+      <td class="square" data-row="0" data-col="7"></td>
+      <td class="square" data-row="0" data-col="8"></td>
+      <td class="square" data-row="0" data-col="9"></td>
+    </tr>
+    <tr>
+      <th class="row-label">1</th>
+      <td class="square" data-row="1" data-col="0"></td>
+      <td class="square" data-row="1" data-col="1"></td>
+      <td class="square" data-row="1" data-col="2"></td>
+      <td class="square" data-row="1" data-col="3"></td>
+      <td class="square" data-row="1" data-col="4"></td>
+      <td class="square" data-row="1" data-col="5"></td>
+      <td class="square" data-row="1" data-col="6"></td>
+      <td class="square" data-row="1" data-col="7"></td>
+      <td class="square" data-row="1" data-col="8"></td>
+      <td class="square" data-row="1" data-col="9"></td>
+    </tr>
+    <tr>
+      <th class="row-label">2</th>
+      <td class="square" data-row="2" data-col="0"></td>
+      <td class="square" data-row="2" data-col="1"></td>
+      <td class="square" data-row="2" data-col="2"></td>
+      <td class="square" data-row="2" data-col="3"></td>
+      <td class="square" data-row="2" data-col="4"></td>
+      <td class="square" data-row="2" data-col="5"></td>
+      <td class="square" data-row="2" data-col="6"></td>
+      <td class="square" data-row="2" data-col="7"></td>
+      <td class="square" data-row="2" data-col="8"></td>
+      <td class="square" data-row="2" data-col="9"></td>
+    </tr>
+    <tr>
+      <th class="row-label">3</th>
+      <td class="square" data-row="3" data-col="0"></td>
+      <td class="square" data-row="3" data-col="1"></td>
+      <td class="square" data-row="3" data-col="2"></td>
+      <td class="square" data-row="3" data-col="3"></td>
+      <td class="square" data-row="3" data-col="4"></td>
+      <td class="square" data-row="3" data-col="5"></td>
+      <td class="square" data-row="3" data-col="6"></td>
+      <td class="square" data-row="3" data-col="7"></td>
+      <td class="square" data-row="3" data-col="8"></td>
+      <td class="square" data-row="3" data-col="9"></td>
+    </tr>
+    <tr>
+      <th class="row-label">4</th>
+      <td class="square" data-row="4" data-col="0"></td>
+      <td class="square" data-row="4" data-col="1"></td>
+      <td class="square" data-row="4" data-col="2"></td>
+      <td class="square" data-row="4" data-col="3"></td>
+      <td class="square" data-row="4" data-col="4"></td>
+      <td class="square" data-row="4" data-col="5"></td>
+      <td class="square" data-row="4" data-col="6"></td>
+      <td class="square" data-row="4" data-col="7"></td>
+      <td class="square" data-row="4" data-col="8"></td>
+      <td class="square" data-row="4" data-col="9"></td>
+    </tr>
+    <tr>
+      <th class="row-label">5</th>
+      <td class="square" data-row="5" data-col="0"></td>
+      <td class="square" data-row="5" data-col="1"></td>
+      <td class="square" data-row="5" data-col="2"></td>
+      <td class="square" data-row="5" data-col="3"></td>
+      <td class="square" data-row="5" data-col="4"></td>
+      <td class="square" data-row="5" data-col="5"></td>
+      <td class="square" data-row="5" data-col="6"></td>
+      <td class="square" data-row="5" data-col="7"></td>
+      <td class="square" data-row="5" data-col="8"></td>
+      <td class="square" data-row="5" data-col="9"></td>
+    </tr>
+    <tr>
+      <th class="row-label">6</th>
+      <td class="square" data-row="6" data-col="0"></td>
+      <td class="square" data-row="6" data-col="1"></td>
+      <td class="square" data-row="6" data-col="2"></td>
+      <td class="square" data-row="6" data-col="3"></td>
+      <td class="square" data-row="6" data-col="4"></td>
+      <td class="square" data-row="6" data-col="5"></td>
+      <td class="square" data-row="6" data-col="6"></td>
+      <td class="square" data-row="6" data-col="7"></td>
+      <td class="square" data-row="6" data-col="8"></td>
+      <td class="square" data-row="6" data-col="9"></td>
+    </tr>
+    <tr>
+      <th class="row-label">7</th>
+      <td class="square" data-row="7" data-col="0"></td>
+      <td class="square" data-row="7" data-col="1"></td>
+      <td class="square" data-row="7" data-col="2"></td>
+      <td class="square" data-row="7" data-col="3"></td>
+      <td class="square" data-row="7" data-col="4"></td>
+      <td class="square" data-row="7" data-col="5"></td>
+      <td class="square" data-row="7" data-col="6"></td>
+      <td class="square" data-row="7" data-col="7"></td>
+      <td class="square" data-row="7" data-col="8"></td>
+      <td class="square" data-row="7" data-col="9"></td>
+    </tr>
+    <tr>
+      <th class="row-label">8</th>
+      <td class="square" data-row="8" data-col="0"></td>
+      <td class="square" data-row="8" data-col="1"></td>
+      <td class="square" data-row="8" data-col="2"></td>
+      <td class="square" data-row="8" data-col="3"></td>
+      <td class="square" data-row="8" data-col="4"></td>
+      <td class="square" data-row="8" data-col="5"></td>
+      <td class="square" data-row="8" data-col="6"></td>
+      <td class="square" data-row="8" data-col="7"></td>
+      <td class="square" data-row="8" data-col="8"></td>
+      <td class="square" data-row="8" data-col="9"></td>
+    </tr>
+    <tr>
+      <th class="row-label">9</th>
+      <td class="square" data-row="9" data-col="0"></td>
+      <td class="square" data-row="9" data-col="1"></td>
+      <td class="square" data-row="9" data-col="2"></td>
+      <td class="square" data-row="9" data-col="3"></td>
+      <td class="square" data-row="9" data-col="4"></td>
+      <td class="square" data-row="9" data-col="5"></td>
+      <td class="square" data-row="9" data-col="6"></td>
+      <td class="square" data-row="9" data-col="7"></td>
+      <td class="square" data-row="9" data-col="8"></td>
+      <td class="square" data-row="9" data-col="9"></td>
+    </tr>
+  </table>
+
+  <!-- "See Example Result" Button -->
+  <button id="exampleButton">See Example Result</button>
+
+  <!-- Modal Popup for Example Result -->
+  <div id="example-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Example Result</h3>
+      <ul>
+        <li>1st place horse is #13 &rarr; last digit 3</li>
+        <li>2nd place horse is #17 &rarr; last digit 7</li>
+        <li>The winning square is at (7,3) <em>(highlighted below)</em>.</li>
+        <li>The person who claimed that square wins!</li>
+      </ul>
+      <!-- Example grid illustrating the winning square -->
+      <table id="example-grid">
+        <tr>
+          <th></th>
+          <th colspan="10" class="gold-banner">🥇 1st PLACE HORSE WINNER</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th class="col-label">0</th> <th class="col-label">1</th> <th class="col-label">2</th>
+          <th class="col-label">3</th> <th class="col-label">4</th> <th class="col-label">5</th>
+          <th class="col-label">6</th> <th class="col-label">7</th> <th class="col-label">8</th>
+          <th class="col-label">9</th>
+        </tr>
+        <tr>
+          <th rowspan="10" class="silver-banner">🥈 2nd<br>PLACE<br>HORSE<br>WINNER</th>
+          <th class="row-label">0</th>
+          <!-- Row 0 cells (all empty for example) -->
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th class="row-label">1</th>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th class="row-label">2</th>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th class="row-label">3</th>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th class="row-label">4</th>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th class="row-label">5</th>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th class="row-label">6</th>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th class="row-label">7</th>
+          <!-- Row 7 cells; mark column 3 as winning square -->
+          <td></td><td></td><td></td>
+          <td class="claimed winner"><strong>JD</strong></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th class="row-label">8</th>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th class="row-label">9</th>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+      </table>
+    </div>
   </div>
-
-  <div class="section-rows">
-    <div class="row">
-      <div class="section">
-        <h2>🎠 Game Overview</h2>
-        <ul>
-          <li>10×10 grid = 100 squares</li>
-          <li>$10 per square</li>
-          <li>$500 to the winner</li>
-          <li>$500 goes towards show season</li>
-          <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
-        </ul>
-      </div>
-
-      <div class="section">
-        <h2>📝 How to Join</h2>
-        <ul>
-          <li>Pick your square(s) on the grid below</li>
-          <li>Fill out the form that pops up</li>
-          <li>Venmo @Magen-Newman-1 $10 per square</li>
-          <li>Add a 🐎 emoji and your email in the Venmo note</li>
-          <li>Email: mnewman1013@gmail.com</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="section">
-        <h2>🏇 How to Win</h2>
-        <ul>
-          <li>Winning square is based on the last digit of the horses' numbers</li>
-          <li>Columns = 🥇 1st place finishers</li>
-          <li>Rows = 🥈 2nd place finishers</li>
-          <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square (2, 4) wins</li>
-        </ul>
-      </div>
-
-      <div class="section">
-        <h2>🥇 Multiple Ways to Win</h2>
-        <ul>
-          <li>Your square can win in 4 different ways:</li>
-          <li>For square (2, 4), you'd win if:</li>
-          <li>🥇 Horse #2 and 🥈 Horse #4</li>
-          <li>🥇 Horse #2 and 🥈 Horse #14</li>
-          <li>🥇 Horse #12 and 🥈 Horse #4</li>
-          <li>🥇 Horse #12 and 🥈 Horse #14</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div id="grid-container">
-    <div>
-      <div class="col-labels">
-        <div></div>
-        <div>0</div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div>
-      </div>
-      <div id="grid-wrapper"></div>
-    </div>
-  </div>
-
-  <div id="modal" style="display:none;">
-    <div id="modalContent">
-      <h3>Reserve Square <span id="squareNumber"></span></h3>
-      <label>Your Name:</label>
-      <input type="text" id="inputName">
-      <label>Email Address:</label>
-      <input type="text" id="inputEmail">
-      <label>
-        <input type="checkbox" id="confirmPayment"> I will Venmo @Magen-Newman-1 $10 per square 🐎
-      </label>
-      <br><br>
-      <button onclick="submitClaim()">Reserve Square</button>
-      <button class="cancel" onclick="closeModal()">Cancel</button>
-    </div>
-  </div>
-
-  <footer>
-    Created with ♥ for Olivia — thanks for supporting her dream!
-  </footer>
 
   <script>
-    const wrapper = document.getElementById('grid-wrapper');
-    const squares = [];
-    let selectedSquare = null;
-
-    function createGrid() {
-      for (let row = 0; row < 10; row++) {
-        for (let col = 0; col < 11; col++) {
-          const index = row * 10 + col - 1;
-          const cell = document.createElement('div');
-
-          if (col === 0) {
-            cell.textContent = row;
-            cell.className = 'row-label';
-          } else {
-            cell.className = 'square';
-            const label = document.createElement('span');
-            label.textContent = index + 1;
-            cell.appendChild(label);
-            cell.addEventListener('click', () => openModal(index));
-            squares.push({ element: cell, claimedBy: null });
-          }
-
-          wrapper.appendChild(cell);
-        }
-      }
-    }
-
-    function openModal(index) {
-      if (squares[index].claimedBy) return;
-      selectedSquare = index;
-      document.getElementById('squareNumber').textContent = index + 1;
-      document.getElementById('modal').style.display = 'flex';
-    }
-
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-      document.getElementById('inputName').value = '';
-      document.getElementById('inputEmail').value = '';
-      document.getElementById('confirmPayment').checked = false;
-    }
-
-    function submitClaim() {
-      const name = document.getElementById('inputName').value;
-      if (!name) return alert("Please enter your name");
-      squares[selectedSquare].claimedBy = name;
-      const square = squares[selectedSquare].element;
-      square.classList.add('filled');
-      square.querySelector('span').textContent = name;
-      closeModal();
-    }
-
-    function startCountdown() {
-      const showDate = new Date("2025-05-03T18:00:00-04:00");
-      const timerSpan = document.getElementById('timer');
-      function updateTimer() {
-        const now = new Date();
-        const diff = showDate - now;
-        if (diff <= 0) {
-          timerSpan.textContent = "It’s showtime!";
+    // JavaScript for grid interactivity and modal
+    // Claiming squares logic
+    const squares = document.querySelectorAll('#fundraiser-grid td.square');
+    squares.forEach(cell => {
+      cell.addEventListener('click', () => {
+        // If already claimed, do nothing (or alert)
+        if (cell.classList.contains('claimed')) {
+          alert("This square is already claimed!");
           return;
         }
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const mins = Math.floor((diff / (1000 * 60)) % 60);
-        const secs = Math.floor((diff / 1000) % 60);
-        timerSpan.textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
-      }
-      updateTimer();
-      setInterval(updateTimer, 1000);
-    }
+        const name = prompt("Enter your name (First and Last)");
+        if (!name) return;  // if user cancelled or blank, do nothing
+        // Get initials: first letter of first and last words
+        let initials = "";
+        const parts = name.trim().split(/\s+/);
+        if (parts.length >= 2) {
+          initials = parts[0][0] + parts[parts.length-1][0];
+        } else if (parts.length === 1) {
+          // single word: take first two letters, or one if name is one letter
+          initials = parts[0].substring(0, 2);
+        }
+        initials = initials.toUpperCase();
+        // Update cell text and style
+        cell.textContent = initials;
+        cell.classList.add('claimed');  // turn cell green by adding class
+      });
+    });
 
-    createGrid();
-    startCountdown();
+    // Modal functionality
+    const modal = document.getElementById('example-modal');
+    const btn = document.getElementById('exampleButton');
+    const spanClose = document.querySelector('#example-modal .close');
+    // Open modal on button click
+    btn.onclick = function() {
+      modal.style.display = "block";
+    };
+    // Close modal when clicking the ×
+    spanClose.onclick = function() {
+      modal.style.display = "none";
+    };
+    // Close modal if clicking outside the modal content
+    window.onclick = function(event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
   </script>
+
 </body>
 </html>
