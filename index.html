@@ -23,7 +23,7 @@
       justify-content: center;
     }
     .banner img {
-      height: 50px;
+      height: 70px;
       margin-right: 1em;
     }
     .countdown {
@@ -35,9 +35,12 @@
       display: flex;
       justify-content: center;
       margin-top: 1em;
+      flex-wrap: wrap;
     }
     .photo {
       max-width: 250px;
+      height: auto;
+      object-fit: contain;
       margin-right: 2em;
     }
     .info {
@@ -58,15 +61,16 @@
     .grid-wrapper {
       display: flex;
       justify-content: center;
-      margin-top: 1em;
+      margin-top: 2em;
+      overflow-x: auto;
     }
     table {
       border-collapse: collapse;
     }
     th, td {
       border: 1px solid #ccc;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       text-align: center;
       font-size: 0.85em;
     }
@@ -88,7 +92,6 @@
   </style>
 </head>
 <body>
-
   <div class="banner">
     <img src="olivia2.jpg" alt="Olivia smiling on horse" />
     Olivia's Horse Show Season Fundraiser
@@ -110,7 +113,7 @@
         </ul>
       </div>
       <div class="card">
-        <h3>📨 How to Join</h3>
+        <h3>📬 How to Join</h3>
         <ul>
           <li>Pick your square(s) on the grid below</li>
           <li>Fill out the form that pops up</li>
@@ -150,7 +153,6 @@
         <th></th>
         <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
       </tr>
-      <!-- 10 rows with vertical silver banner -->
       <tr>
         <th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>
         <th>0</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
