@@ -74,6 +74,48 @@
     .section li {
       margin-bottom: 8px;
     }
+    .see-example {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #28a745;
+      cursor: pointer;
+    }
+    .see-example:hover {
+      text-decoration: underline;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 6px;
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+    }
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #aaa;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #000;
+    }
     #grid-wrapper {
       display: flex;
       justify-content: center;
@@ -176,6 +218,7 @@
           <li>🥇 Horse #12 and 🥈 Horse #4</li>
           <li>🥇 Horse #12 and 🥈 Horse #14</li>
         </ul>
+        <span class="see-example" onclick="document.getElementById('exampleModal').style.display='block'">See Example Result</span>
       </div>
     </div>
 
@@ -213,6 +256,17 @@
   <footer>
     Created with ♥ for Olivia — thanks for supporting her dream!
   </footer>
+
+  <div id="exampleModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('exampleModal').style.display='none'">&times;</span>
+      <h3>Example Result</h3>
+      <p>🥇 1st place horse: #13 → last digit 3<br>
+         🥈 2nd place horse: #17 → last digit 7<br>
+         That means the winning square is <strong>(7, 3)</strong>.</p>
+      <img src="example-grid.png" alt="Example Grid" style="width: 100%; border: 1px solid #ccc; border-radius: 6px;">
+    </div>
+  </div>
 
   <script>
     const grid = document.getElementById('grid');
