@@ -2,109 +2,153 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Olivia's Horse Show Fundraiser</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+  <title>Olivia's Horse Show Season Fundraiser</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Raleway', sans-serif;
-      background: #f9fafb;
       margin: 0;
       padding: 0;
-      text-align: center;
+      background: #f9fafb;
+      color: #333;
     }
-    .banner {
-      background: #039be5;
+    .header {
+      background: #0288d1;
       color: white;
-      padding: 1em;
-      font-size: 1.5em;
-      font-weight: bold;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 10px 20px;
+      position: relative;
     }
-    .banner img {
-      height: 80px;
-      margin-right: 1em;
-      object-fit: contain;
+    .header img {
+      height: 40px;
+      margin-right: 15px;
     }
-    .countdown {
-      color: #388e3c;
-      font-size: 1em;
-      margin-top: 0.5em;
+    .banner-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .container {
-      display: flex;
-      justify-content: center;
-      margin-top: 1em;
-    }
-    .photo {
-      max-width: 250px;
-      max-height: 350px;
-      margin-right: 2em;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-    .info {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
       display: flex;
       flex-wrap: wrap;
-      max-width: 1000px;
-      justify-content: space-between;
+      justify-content: center;
     }
-    .card {
+    .sidebar {
+      flex: 1 1 250px;
+      margin-right: 20px;
+    }
+    .sidebar img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+    .info-boxes {
+      flex: 3 1 600px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .info-box {
       background: white;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      padding: 1em;
-      width: 45%;
-      margin-bottom: 1em;
-      text-align: left;
+      padding: 20px;
+      flex: 1 1 calc(50% - 10px);
+    }
+    .info-box h3 {
+      margin-top: 0;
     }
     .grid-wrapper {
-      display: flex;
-      justify-content: center;
-      margin-top: 1em;
+      margin-top: 30px;
+      text-align: center;
     }
     table {
       border-collapse: collapse;
+      margin: 0 auto;
     }
     th, td {
       border: 1px solid #ccc;
+      padding: 10px;
       width: 40px;
       height: 40px;
       text-align: center;
-      font-size: 0.85em;
+      vertical-align: middle;
     }
     .top-banner-label {
-      background: #ffce34;
+      background: #ffcc33;
       font-weight: bold;
     }
     .left-banner-label {
-      background: #ccc;
-      font-weight: bold;
+      background: silver;
       writing-mode: vertical-rl;
-      text-orientation: mixed;
+      transform: rotate(180deg);
+      font-weight: bold;
+    }
+    .claimed {
+      background: #4caf50;
+      color: white;
+      font-weight: bold;
     }
     .footer {
-      margin-top: 2em;
+      margin: 30px 0;
+      text-align: center;
       font-size: 0.9em;
-      color: #555;
+      color: #888;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 6px;
+      text-align: left;
+    }
+    .modal-close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .modal-close:hover {
+      color: black;
     }
   </style>
 </head>
 <body>
-
-  <div class="banner">
-    <img src="olivia2.jpg" alt="Olivia smiling on horse" />
-    Olivia's Horse Show Season Fundraiser
+  <div class="header">
+    <img src="olivia2.jpg" alt="Olivia">
+    <div class="banner-content">
+      <h1>Olivia's Horse Show Season Fundraiser</h1>
+      <div class="countdown">Kentucky Derby Countdown: <span id="countdown"></span></div>
+    </div>
   </div>
-  <div class="countdown">Kentucky Derby Countdown: 19d 1h 10m 49s</div>
 
   <div class="container">
-    <img src="olivia1.jpg" class="photo" alt="Olivia riding horse" />
-
-    <div class="info">
-      <div class="card">
-        <h3>🐴 Game Overview</h3>
+    <div class="sidebar">
+      <img src="olivia1.jpg" alt="Olivia Riding">
+    </div>
+    <div class="info-boxes">
+      <div class="info-box">
+        <h3>🐎 Game Overview</h3>
         <ul>
           <li>10×10 grid = 100 squares</li>
           <li>$10 per square</li>
@@ -113,8 +157,8 @@
           <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
         </ul>
       </div>
-      <div class="card">
-        <h3>📨 How to Join</h3>
+      <div class="info-box">
+        <h3>📩 How to Join</h3>
         <ul>
           <li>Pick your square(s) on the grid below</li>
           <li>Fill out the form that pops up</li>
@@ -122,7 +166,7 @@
           <li>Add a 🐎 emoji and your email in the Venmo note</li>
         </ul>
       </div>
-      <div class="card">
+      <div class="info-box">
         <h3>⚔️ How to Win</h3>
         <ul>
           <li>Winning square is based on the last digit of the horses' numbers</li>
@@ -131,7 +175,7 @@
           <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square <strong>(2, 4)</strong> wins</li>
         </ul>
       </div>
-      <div class="card">
+      <div class="info-box">
         <h3>🥇 Multiple Ways to Win</h3>
         <ul>
           <li>🥇 Horse #2 and 🥈 Horse #4</li>
@@ -139,7 +183,7 @@
           <li>🥇 Horse #12 and 🥈 Horse #4</li>
           <li>🥇 Horse #12 and 🥈 Horse #14</li>
         </ul>
-        <div class="see-example-result">See Example Result</div>
+        <div class="see-example">See Example Result</div>
       </div>
     </div>
   </div>
@@ -151,22 +195,21 @@
         <th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th>
       </tr>
       <tr>
-        <th></th>
+        <th class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>
         <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
       </tr>
-      <tr>
-        <th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>
-        <th>0</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr><th>1</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><th>2</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><th>3</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><th>4</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><th>5</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><th>6</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><th>7</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><th>8</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><th>9</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <!-- Grid rows -->
+      <script>
+        for (let row = 0; row < 10; row++) {
+          document.write('<tr>');
+          document.write('<th>' + row + '</th>');
+          for (let col = 0; col < 10; col++) {
+            let sq = row * 10 + col + 1;
+            document.write(`<td class="square" data-number="${sq}">${sq}</td>`);
+          }
+          document.write('</tr>');
+        }
+      </script>
     </table>
   </div>
 
@@ -174,5 +217,44 @@
     Created with ❤️ for Olivia — Thanks for supporting her dream!
   </div>
 
+  <div id="squareModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <h3>Your Selections</h3>
+      <p>Square <span id="selectedSquare"></span></p>
+      <label>Your Name<br><input type="text" id="nameInput"></label><br><br>
+      <label>Email Address<br><input type="email" id="emailInput"></label><br><br>
+      <label><input type="checkbox" id="venmoConfirm"> I will Venmo @MagenNewman $10 for 1 square</label>
+      <p><small>Remember to include a 🐎 emoji and your email in the note</small></p>
+      <button onclick="reserveSquare()">Reserve Squares</button>
+      <button onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    function closeModal() {
+      document.getElementById('squareModal').style.display = 'none';
+    }
+    function reserveSquare() {
+      const name = document.getElementById('nameInput').value;
+      const initials = name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+      const square = document.querySelector('.square[data-number="' + selectedSquare + '"]');
+      if (initials && square) {
+        square.textContent = initials;
+        square.classList.add('claimed');
+      }
+      closeModal();
+    }
+    let selectedSquare = null;
+    document.querySelectorAll('.square').forEach(cell => {
+      cell.addEventListener('click', () => {
+        if (!cell.classList.contains('claimed')) {
+          selectedSquare = cell.getAttribute('data-number');
+          document.getElementById('selectedSquare').textContent = selectedSquare;
+          document.getElementById('squareModal').style.display = 'block';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
