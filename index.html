@@ -25,12 +25,34 @@
       color: #28a745;
       border-bottom: 1px solid #ccc;
     }
-    .section-rows {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 0 20px;
+    .content-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 30px;
     }
-    .row {
+    .photo-left {
+      max-width: 240px;
+    }
+    .photo-left img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .main-section {
+      flex: 1;
+      max-width: 800px;
+    }
+    .top-photo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .top-photo img {
+      max-height: 200px;
+      width: auto;
+      border-radius: 8px;
+    }
+    .info-sections {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
@@ -42,6 +64,14 @@
       border-radius: 6px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       flex: 1 1 300px;
+      min-width: 300px;
+    }
+    .highlight-box {
+      background-color: #ffffff;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
     }
     .section h2 {
       color: #155724;
@@ -107,49 +137,56 @@
     Kentucky Derby Countdown: <span id="timer"></span>
   </div>
 
-  <div class="section-rows">
-    <div class="row">
-      <div class="section">
-        <h2>🎠 Game Overview</h2>
-        <ul>
-          <li>10×10 grid = 100 squares</li>
-          <li>$10 per square</li>
-          <li>$500 to the winner</li>
-          <li>$500 goes towards show season</li>
-          <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
-        </ul>
-      </div>
-      <div class="section">
-        <h2>🥇 Multiple Ways to Win</h2>
-        <ul>
-          <li>Your square can win in 4 different ways:</li>
-          <li>For square (2, 4), you'd win if:</li>
-          <li>🥇 Horse #2 and 🥈 Horse #4</li>
-          <li>🥇 Horse #2 and 🥈 Horse #14</li>
-          <li>🥇 Horse #12 and 🥈 Horse #4</li>
-          <li>🥇 Horse #12 and 🥈 Horse #14</li>
-        </ul>
-        <span class="see-example">See Example Result</span>
-      </div>
+  <div class="top-photo">
+    <img src="olivia2.jpg" alt="Olivia riding her horse smiling">
+  </div>
+
+  <div class="content-container">
+    <div class="photo-left">
+      <img src="olivia1.jpg" alt="Olivia riding her horse proudly">
     </div>
-    <div class="row">
-      <div class="section">
-        <h2>📝 How to Join</h2>
-        <ul>
-          <li>Pick your square(s) on the grid below</li>
-          <li>Fill out the form that pops up</li>
-          <li>Venmo @Magen-Newman-1 $10 per square or pay with cash</li>
-          <li>Add a 🐎 emoji and your email in the Venmo note</li>
-        </ul>
-      </div>
-      <div class="section">
-        <h2>🏇 How to Win</h2>
-        <ul>
-          <li>Winning square is based on the last digit of the horses' numbers</li>
-          <li>Columns = 🥇 1st place finishers</li>
-          <li>Rows = 🥈 2nd place finishers</li>
-          <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square (2, 4) wins</li>
-        </ul>
+    <div class="main-section">
+      <div class="info-sections">
+        <div class="section">
+          <h2>🎠 Game Overview</h2>
+          <ul>
+            <li>10×10 grid = 100 squares</li>
+            <li>$10 per square</li>
+            <li>$500 to the winner</li>
+            <li>$500 goes towards show season</li>
+            <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
+          </ul>
+        </div>
+        <div class="section highlight-box">
+          <h2>🏇 How to Win</h2>
+          <ul>
+            <li>Winning square is based on the last digit of the horses' numbers</li>
+            <li>Columns = 🥇 1st place finishers</li>
+            <li>Rows = 🥈 2nd place finishers</li>
+            <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square (2, 4) wins</li>
+          </ul>
+        </div>
+        <div class="section">
+          <h2>📝 How to Join</h2>
+          <ul>
+            <li>Pick your square(s) on the grid below</li>
+            <li>Fill out the form that pops up</li>
+            <li>Venmo @Magen-Newman-1 $10 per square or pay with cash</li>
+            <li>Add a 🐎 emoji and your email in the Venmo note</li>
+          </ul>
+        </div>
+        <div class="section highlight-box">
+          <h2>🥇 Multiple Ways to Win</h2>
+          <ul>
+            <li>Your square can win in 4 different ways:</li>
+            <li>For square (2, 4), you'd win if:</li>
+            <li>🥇 Horse #2 and 🥈 Horse #4</li>
+            <li>🥇 Horse #2 and 🥈 Horse #14</li>
+            <li>🥇 Horse #12 and 🥈 Horse #4</li>
+            <li>🥇 Horse #12 and 🥈 Horse #14</li>
+          </ul>
+          <span class="see-example">See Example Result</span>
+        </div>
       </div>
     </div>
   </div>
