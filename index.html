@@ -1,73 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Olivia's Horse Show Fundraiser</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olivia's Horse Show Season Fundraiser</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Raleway', sans-serif;
+      background: #f9fafa;
       margin: 0;
-      background: #f7f8f9;
-      color: #222;
+      padding: 0;
     }
-    .top-banner {
-      background-color: #0288d1;
-      padding: 12px 0;
+    header {
+      background-color: #008dd2;
       color: white;
+      text-align: center;
+      padding: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .top-banner img {
-      height: 45px;
+    header img {
+      height: 40px;
       margin-right: 10px;
     }
     .countdown {
       text-align: center;
-      margin: 10px 0;
-      color: #4caf50;
+      padding: 10px;
+      color: #2d7f32;
       font-weight: bold;
     }
-    .content {
-      display: grid;
-      grid-template-columns: 250px 1fr;
-      gap: 24px;
-      padding: 20px;
+    .main-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 10px;
     }
-    .info-grid {
+    .left-image {
+      max-width: 200px;
+      margin: 10px;
+    }
+    .info-boxes {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      gap: 20px;
+      max-width: 900px;
     }
-    .card {
+    .info-box {
       background: white;
-      padding: 16px;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-    .see-example {
-      color: #0288d1;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .grid-wrapper {
       padding: 20px;
+      overflow-x: auto;
     }
     table {
       border-collapse: collapse;
-      width: 100%;
+      margin: 0 auto;
     }
     th, td {
       border: 1px solid #ccc;
-      width: 40px;
-      height: 40px;
       text-align: center;
       vertical-align: middle;
+      width: 30px;
+      height: 30px;
+      font-size: 12px;
+      cursor: pointer;
     }
     .top-banner-label {
-      background: #ffce34;
+      background: #ffcf3b;
       font-weight: bold;
     }
     .left-banner-label {
@@ -76,29 +80,60 @@
       transform: rotate(180deg);
       font-weight: bold;
     }
-    .footer {
+    .claimed {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 300px;
+      border-radius: 5px;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover, .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    footer {
       text-align: center;
-      font-size: 0.9em;
-      margin: 30px auto 20px;
-      color: #777;
+      padding: 10px;
+      font-size: 14px;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <div class="top-banner">
-    <img src="olivia2.jpg" alt="Olivia riding" />
+  <header>
+    <img src="olivia2.jpg" alt="Olivia icon" />
     <h1>Olivia's Horse Show Season Fundraiser</h1>
-  </div>
+  </header>
+  <div class="countdown">Kentucky Derby Countdown: 19d 1h 10m 49s</div>
 
-  <div class="countdown">
-    Kentucky Derby Countdown: 19d 1h 10m 49s
-  </div>
-
-  <div class="content">
-    <img src="olivia1.jpg" alt="Olivia riding proudly" width="100%" style="border-radius: 10px;" />
-
-    <div class="info-grid">
-      <div class="card">
+  <div class="main-content">
+    <img class="left-image" src="olivia1.jpg" alt="Olivia riding" />
+    <div class="info-boxes">
+      <div class="info-box">
         <h3>🐴 Game Overview</h3>
         <ul>
           <li>10×10 grid = 100 squares</li>
@@ -108,8 +143,8 @@
           <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
         </ul>
       </div>
-      <div class="card">
-        <h3>📩 How to Join</h3>
+      <div class="info-box">
+        <h3>📨 How to Join</h3>
         <ul>
           <li>Pick your square(s) on the grid below</li>
           <li>Fill out the form that pops up</li>
@@ -117,7 +152,7 @@
           <li>Add a 🐎 emoji and your email in the Venmo note</li>
         </ul>
       </div>
-      <div class="card">
+      <div class="info-box">
         <h3>⚔️ How to Win</h3>
         <ul>
           <li>Winning square is based on the last digit of the horses' numbers</li>
@@ -126,17 +161,15 @@
           <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square <strong>(2, 4)</strong> wins</li>
         </ul>
       </div>
-      <div class="card">
+      <div class="info-box">
         <h3>🥇 Multiple Ways to Win</h3>
-        <p>Your square can win in 4 different ways:<br>
-        For square <strong>(2, 4)</strong>, you'd win if:</p>
         <ul>
           <li>🥇 Horse #2 and 🥈 Horse #4</li>
           <li>🥇 Horse #2 and 🥈 Horse #14</li>
           <li>🥇 Horse #12 and 🥈 Horse #4</li>
           <li>🥇 Horse #12 and 🥈 Horse #14</li>
         </ul>
-        <div class="see-example">See Example Result</div>
+        <div class="see-example" onclick="document.getElementById('exampleModal').style.display='block'">See Example Result</div>
       </div>
     </div>
   </div>
@@ -148,46 +181,41 @@
         <th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th>
       </tr>
       <tr>
-        <th></th>
+        <th class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>
         <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
       </tr>
-      <!-- Data rows 0-9 -->
-      <tr>
-        <th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>
-        <th>0</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <th>1</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <th>2</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <th>3</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <th>4</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <th>5</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <th>6</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <th>7</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <th>8</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <th>9</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
+      <!-- Generate 10 rows -->
+      <script>
+        for (let i = 0; i < 10; i++) {
+          document.write('<tr><th>' + i + '</th>');
+          for (let j = 0; j < 10; j++) {
+            document.write('<td onclick="handleClick(this, ' + i + ', ' + j + ')"></td>');
+          }
+          document.write('</tr>');
+        }
+      </script>
     </table>
   </div>
 
-  <div class="footer">
-    Created with ❤️ for Olivia — Thanks for supporting her dream!
+  <div id="exampleModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('exampleModal').style.display='none'">&times;</span>
+      <img src="horseshowfundraiser.png" alt="Example Result" style="width: 100%" />
+    </div>
   </div>
+
+  <footer>
+    Created with ❤️ for Olivia — Thanks for supporting her dream!
+  </footer>
+
+  <script>
+    function handleClick(cell, row, col) {
+      const name = prompt("Enter your name (First and Last)");
+      if (!name) return;
+      const initials = name.trim().split(/\s+/).map(n => n[0]).join('').toUpperCase();
+      cell.textContent = initials;
+      cell.classList.add("claimed");
+    }
+  </script>
 </body>
 </html>
