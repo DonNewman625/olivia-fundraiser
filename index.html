@@ -33,32 +33,14 @@
       color: #28a745;
       border-bottom: 1px solid #ccc;
     }
-    .main-content {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      align-items: flex-start;
+    .section-container {
       max-width: 1100px;
       margin: 30px auto;
-      padding: 0 20px;
-    }
-    .photo-column {
-      flex: 1 1 250px;
-      text-align: center;
-    }
-    .photo-column img {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      margin-bottom: 20px;
-    }
-    .section-container {
-      flex: 2 1 500px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
+      padding: 0 20px;
+      align-items: start;
     }
     .section {
       background-color: #ffffff;
@@ -76,6 +58,18 @@
     }
     .section li {
       margin-bottom: 8px;
+    }
+    .with-image {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .with-image img {
+      width: 150px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
     #grid {
       display: grid;
@@ -128,14 +122,10 @@
     Kentucky Derby Countdown: <span id="timer"></span>
   </div>
 
-  <div class="main-content">
-    <div class="photo-column">
-      <img src="unnamed.jpg" alt="Olivia riding her horse proudly" />
-      <img src="unnamed2.jpg" alt="Olivia riding her horse smiling" />
-    </div>
-
-    <div class="section-container">
-      <div class="section">
+  <div class="section-container">
+    <div class="section with-image">
+      <img src="olivia1.jpg" alt="Olivia riding her horse proudly">
+      <div>
         <h2>🎠 Game Overview</h2>
         <ul>
           <li>10×10 grid = 100 squares</li>
@@ -145,8 +135,10 @@
           <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
         </ul>
       </div>
+    </div>
 
-      <div class="section">
+    <div class="section with-image">
+      <div>
         <h2>🥇 Multiple Ways to Win</h2>
         <ul>
           <li>Your square can win in 4 different ways:</li>
@@ -157,26 +149,27 @@
           <li>🥇 Horse #12 and 🥈 Horse #14</li>
         </ul>
       </div>
+      <img src="olivia2.jpg" alt="Olivia riding her horse smiling">
+    </div>
 
-      <div class="section">
-        <h2>📝 How to Join</h2>
-        <ul>
-          <li>Pick your square(s) on the grid below</li>
-          <li>Fill out the quick form that pops up</li>
-          <li>Venmo @Magen-Newman-1 $10 per square</li>
-          <li>Add a 🐎 emoji and your email in the Venmo note</li>
-        </ul>
-      </div>
+    <div class="section">
+      <h2>📝 How to Join</h2>
+      <ul>
+        <li>Pick your square(s) on the grid below</li>
+        <li>Fill out the quick form that pops up</li>
+        <li>Venmo @Magen-Newman-1 $10 per square</li>
+        <li>Add a 🐎 emoji and your email in the Venmo note</li>
+      </ul>
+    </div>
 
-      <div class="section">
-        <h2>🏇 How to Win</h2>
-        <ul>
-          <li>Winning square is based on the last digit of Olivia’s competition results</li>
-          <li>Columns = 1st place results</li>
-          <li>Rows = 2nd place results</li>
-          <li>Example: If Olivia places 1st in class #12 and 2nd in class #4 → square (2,4) wins</li>
-        </ul>
-      </div>
+    <div class="section">
+      <h2>🏇 How to Win</h2>
+      <ul>
+        <li>Winning square is based on the last digit of Olivia’s competition results</li>
+        <li>Columns = 1st place results</li>
+        <li>Rows = 2nd place results</li>
+        <li>Example: If Olivia places 1st in class #12 and 2nd in class #4 → square (2,4) wins</li>
+      </ul>
     </div>
   </div>
 
