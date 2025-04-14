@@ -74,19 +74,53 @@
     .section li {
       margin-bottom: 8px;
     }
+    #grid-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+      flex-direction: column;
+    }
+    .banner-row {
+      background-color: gold;
+      color: black;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 10px;
+      text-align: center;
+      width: fit-content;
+      border-radius: 6px 6px 0 0;
+    }
+    .grid-container {
+      display: flex;
+    }
+    .silver-banner {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      background: silver;
+      color: black;
+      font-weight: bold;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px 0 0 6px;
+    }
     #grid {
       display: grid;
-      grid-template-columns: repeat(10, 1fr);
-      gap: 5px;
-      max-width: 600px;
-      margin: 30px auto;
+      grid-template-columns: repeat(10, 40px);
+      grid-template-rows: repeat(10, 40px);
+      gap: 2px;
     }
     .square {
-      width: 100%;
-      padding-top: 100%;
-      position: relative;
+      width: 40px;
+      height: 40px;
       background-color: #e9ecef;
       border: 1px solid #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
       cursor: pointer;
     }
     .square:hover {
@@ -96,42 +130,7 @@
       background-color: #6cace4;
       color: white;
       cursor: not-allowed;
-    }
-    .square span {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 12px;
-      text-align: center;
-      word-break: break-word;
-    }
-    .gold-banner {
-      text-align: center;
       font-weight: bold;
-      font-size: 18px;
-      color: #fff;
-      background: gold;
-      padding: 10px;
-      margin: 0 auto;
-      max-width: 600px;
-      border-radius: 5px 5px 0 0;
-    }
-    .silver-banner-left {
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      background: silver;
-      color: black;
-      text-align: center;
-      padding: 10px;
-      font-weight: bold;
-      margin-right: 10px;
-      border-radius: 5px 0 0 5px;
-    }
-    #grid-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
     footer {
       background-color: #f1f1f1;
@@ -203,10 +202,12 @@
     </div>
   </div>
 
-  <div class="gold-banner">🥇 1st PLACE HORSE WINNER</div>
   <div id="grid-wrapper">
-    <div class="silver-banner-left">🥈 2nd PLACE HORSE WINNER</div>
-    <div id="grid"></div>
+    <div class="banner-row">🥇 1st PLACE HORSE WINNER</div>
+    <div class="grid-container">
+      <div class="silver-banner">🥈 2nd PLACE HORSE WINNER</div>
+      <div id="grid"></div>
+    </div>
   </div>
 
   <footer>
@@ -222,9 +223,7 @@
         const square = document.createElement('div');
         square.className = 'square';
         square.addEventListener('click', () => handleClaim(square, i));
-        const label = document.createElement('span');
-        label.textContent = i + 1;
-        square.appendChild(label);
+        square.textContent = i + 1;
         grid.appendChild(square);
         squares.push({ element: square, claimedBy: null });
       }
@@ -236,7 +235,7 @@
       if (name) {
         squares[index].claimedBy = name;
         square.classList.add('filled');
-        square.querySelector('span').textContent = name;
+        square.textContent = name.split(" ").map(n => n[0]).join("").toUpperCase();
       }
     }
 
