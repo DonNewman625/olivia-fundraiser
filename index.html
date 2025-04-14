@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Olivia's Horse Show Fundraiser</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -12,131 +12,111 @@
       background-color: #f8f9fa;
       color: #222;
     }
-    header {
-      background-color: #0094dc;
-      color: white;
+    .top-banner {
+      background-color: #0288d1;
+      padding: 1rem 0;
+    }
+    .top-banner-content {
       display: flex;
       align-items: center;
-      padding: 10px 20px;
+      justify-content: center;
+      gap: 1rem;
     }
-    header img {
-      height: 50px;
-      margin-right: 20px;
+    .top-banner img {
+      height: 60px;
       border-radius: 5px;
     }
-    header h1 {
+    .top-banner h1 {
+      color: white;
       margin: 0;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
     }
     .countdown {
       text-align: center;
-      padding: 10px;
-      color: #388e3c;
-      font-weight: 600;
+      margin: 1rem 0;
+      color: #4CAF50;
+      font-weight: bold;
     }
     .content {
-      display: flex;
-      margin: 20px;
-    }
-    .sidebar {
-      flex: 0 0 260px;
-      margin-right: 20px;
-    }
-    .sidebar img {
-      width: 100%;
-      border-radius: 8px;
-    }
-    .info {
-      flex: 1;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      grid-template-columns: 250px 1fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: auto;
+      padding: 1rem;
+    }
+    .left-image img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
     }
     .card {
       background-color: white;
-      padding: 20px;
+      padding: 1rem;
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     }
     .card h2 {
-      margin-top: 0;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .card ul {
+      padding-left: 1.25rem;
+    }
+    .see-example {
+      color: #0288d1;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 0.5rem;
+      cursor: pointer;
     }
     .grid-wrapper {
-      margin: 30px auto;
-      max-width: 800px;
+      max-width: 1000px;
+      margin: 2rem auto;
     }
     table {
       border-collapse: collapse;
       width: 100%;
+      text-align: center;
     }
     th, td {
       border: 1px solid #ccc;
-      text-align: center;
-      width: 10%;
-      height: 40px;
+      padding: 0.75rem;
+      min-width: 40px;
     }
-    .gold-banner th {
-      background: #ffce33;
+    .top-banner-label {
+      background-color: #ffcf33;
       font-weight: bold;
     }
-    .silver-banner td {
-      background: #ccc;
+    .left-banner-label {
+      background-color: #ccc;
       font-weight: bold;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-    }
-    .square {
-      background: #f4f4f4;
-      cursor: pointer;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-    }
-    .modal-content {
-      background: white;
-      margin: 10% auto;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 600px;
-      position: relative;
-    }
-    .modal-content img {
-      width: 100%;
-    }
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 24px;
-      cursor: pointer;
-    }
-    a.button {
-      color: #007bff;
-      cursor: pointer;
-      font-weight: bold;
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="olivia2.jpg" alt="Olivia smiling">
-    <h1>Olivia's Horse Show Season Fundraiser</h1>
-  </header>
-  <div class="countdown">Kentucky Derby Countdown: 19d 1h 10m 49s</div>
+  <div class="top-banner">
+    <div class="top-banner-content">
+      <img src="olivia2.jpg" alt="Olivia smiling on horse" />
+      <h1>Olivia's Horse Show Season Fundraiser</h1>
+    </div>
+  </div>
+
+  <div class="countdown">
+    Kentucky Derby Countdown: 19d 1h 10m 49s
+  </div>
 
   <div class="content">
-    <div class="sidebar">
-      <img src="olivia1.jpg" alt="Olivia riding her horse">
+    <div class="left-image">
+      <img src="olivia1.jpg" alt="Olivia riding her horse" />
     </div>
-    <div class="info">
+    <div class="info-grid">
       <div class="card">
         <h2>🐎 Game Overview</h2>
         <ul>
@@ -148,7 +128,7 @@
         </ul>
       </div>
       <div class="card">
-        <h2>📨 How to Join</h2>
+        <h2>📩 How to Join</h2>
         <ul>
           <li>Pick your square(s) on the grid below</li>
           <li>Fill out the form that pops up</li>
@@ -157,50 +137,44 @@
         </ul>
       </div>
       <div class="card">
-        <h2>🏁 How to Win</h2>
+        <h2>⚖️ How to Win</h2>
         <ul>
           <li>Winning square is based on the last digit of the horses' numbers</li>
           <li>Columns = 🥇 1st place finishers</li>
           <li>Rows = 🥈 2nd place finishers</li>
-          <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square <b>(2, 4)</b> wins</li>
+          <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square <strong>(2, 4)</strong> wins</li>
         </ul>
       </div>
       <div class="card">
-        <h2>🥇 Multiple Ways to Win</h2>
+        <h2>🧳 Multiple Ways to Win</h2>
         <ul>
           <li>🥇 Horse #2 and 🥈 Horse #4</li>
           <li>🥇 Horse #2 and 🥈 Horse #14</li>
           <li>🥇 Horse #12 and 🥈 Horse #4</li>
           <li>🥇 Horse #12 and 🥈 Horse #14</li>
         </ul>
-        <a class="button" onclick="document.getElementById('modal').style.display='block'">See Example Result</a>
+        <div class="see-example">See Example Result</div>
       </div>
     </div>
   </div>
 
   <div class="grid-wrapper">
     <table>
-      <tr class="gold-banner">
-        <th></th>
-        <th colspan="10">🥇 1st PLACE HORSE WINNER</th>
-      </tr>
       <tr>
         <th></th>
+        <th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th>
+      </tr>
+      <tr>
+        <th class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>
         <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
       </tr>
-      <!-- Grid rows -->
-      <tr><td rowspan="10" class="silver-banner">🥈<br>2nd<br>PLACE<br>HORSE<br>WINNER</td>
-        <td>0</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      <!-- Example single row -->
+      <tr>
+        <th>0</th>
+        <td>o</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
       </tr>
-      <!-- Repeat rows 1-9 as needed, omitted for brevity -->
+      <!-- You can add the other 9 rows similarly -->
     </table>
-  </div>
-
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
-      <img src="horseshowfundraiser.png" alt="Example result grid" />
-    </div>
   </div>
 </body>
 </html>
