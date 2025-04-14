@@ -45,20 +45,26 @@
       color: #28a745;
       border-bottom: 1px solid #ccc;
     }
-    .section-container {
+    .section-rows {
       max-width: 1100px;
       margin: 30px auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
       padding: 0 20px;
-      align-items: start;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
     }
     .section {
       background-color: #ffffff;
       padding: 20px;
       border-radius: 6px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      flex: 1 1 300px;
     }
     .section h2 {
       color: #155724;
@@ -103,48 +109,6 @@
       text-align: center;
       word-break: break-word;
     }
-    #modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-    #modalContent {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 400px;
-      text-align: left;
-    }
-    #modalContent h3 {
-      margin-top: 0;
-    }
-    #modalContent input {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    #modalContent button {
-      padding: 10px 15px;
-      margin-right: 10px;
-      border: none;
-      border-radius: 4px;
-      background-color: #28a745;
-      color: white;
-      cursor: pointer;
-    }
-    #modalContent .cancel {
-      background-color: #ccc;
-    }
     footer {
       background-color: #f1f1f1;
       padding: 15px;
@@ -167,69 +131,57 @@
     Kentucky Derby Countdown: <span id="timer"></span>
   </div>
 
-  <div class="section-container">
-    <div class="section">
-      <h2>🎠 Game Overview</h2>
-      <ul>
-        <li>10×10 grid = 100 squares</li>
-        <li>$10 per square</li>
-        <li>$500 to the winner</li>
-        <li>$500 goes towards show season</li>
-        <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
-      </ul>
+  <div class="section-rows">
+    <div class="row">
+      <div class="section">
+        <h2>🎠 Game Overview</h2>
+        <ul>
+          <li>10×10 grid = 100 squares</li>
+          <li>$10 per square</li>
+          <li>$500 to the winner</li>
+          <li>$500 goes towards show season</li>
+          <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>🥇 Multiple Ways to Win</h2>
+        <ul>
+          <li>Your square can win in 4 different ways:</li>
+          <li>For square (2, 4), you'd win if:</li>
+          <li>🥇 Horse #2 and 🥈 Horse #4</li>
+          <li>🥇 Horse #2 and 🥈 Horse #14</li>
+          <li>🥇 Horse #12 and 🥈 Horse #4</li>
+          <li>🥇 Horse #12 and 🥈 Horse #14</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="section">
-      <h2>🥇 Multiple Ways to Win</h2>
-      <ul>
-        <li>Your square can win in 4 different ways:</li>
-        <li>For square (2, 4), you'd win if:</li>
-        <li>🥇 Horse #2 and 🥈 Horse #4</li>
-        <li>🥇 Horse #2 and 🥈 Horse #14</li>
-        <li>🥇 Horse #12 and 🥈 Horse #4</li>
-        <li>🥇 Horse #12 and 🥈 Horse #14</li>
-      </ul>
-    </div>
+    <div class="row">
+      <div class="section">
+        <h2>📝 How to Join</h2>
+        <ul>
+          <li>Pick your square(s) on the grid below</li>
+          <li>Fill out the form that pops up</li>
+          <li>Venmo @Magen-Newman-1 $10 per square</li>
+          <li>Add a 🐎 emoji and your email in the Venmo note</li>
+          <li>Email: mnewman1013@gmail.com</li>
+        </ul>
+      </div>
 
-    <div class="section">
-      <h2>📝 How to Join</h2>
-      <ul>
-        <li>Pick your square(s) on the grid below</li>
-        <li>Fill out the form that pops up</li>
-        <li>Venmo @Magen-Newman-1 $10 per square</li>
-        <li>Add a 🐎 emoji and your email in the Venmo note</li>
-        <li>Email: mnewman1013@gmail.com</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h2>🏇 How to Win</h2>
-      <ul>
-        <li>Winning square is based on the last digit of Olivia’s competition results</li>
-        <li>Columns = 1st place results</li>
-        <li>Rows = 2nd place results</li>
-        <li>Example: If Olivia places 1st in class #12 and 2nd in class #4 → square (2,4) wins</li>
-      </ul>
+      <div class="section">
+        <h2>🏇 How to Win</h2>
+        <ul>
+          <li>Winning square is based on the last digit of Olivia’s competition results</li>
+          <li>Columns = 1st place results</li>
+          <li>Rows = 2nd place results</li>
+          <li>Example: If Olivia places 1st in class #12 and 2nd in class #4 → square (2,4) wins</li>
+        </ul>
+      </div>
     </div>
   </div>
 
   <div id="grid"></div>
-
-  <div id="modal" style="display:none;">
-    <div id="modalContent">
-      <h3>Reserve Square <span id="squareNumber"></span></h3>
-      <label>Your Name:</label>
-      <input type="text" id="inputName">
-      <label>Email Address:</label>
-      <input type="text" id="inputEmail">
-      <label>
-        <input type="checkbox" id="confirmPayment"> I will Venmo @Magen-Newman-1 $10 per square 🐎
-      </label>
-      <br><br>
-      <button onclick="submitClaim()">Reserve Square</button>
-      <button class="cancel" onclick="closeModal()">Cancel</button>
-    </div>
-  </div>
 
   <footer>
     Created with ♥ for Olivia — thanks for supporting her dream!
@@ -238,13 +190,12 @@
   <script>
     const grid = document.getElementById('grid');
     const squares = [];
-    let selectedSquare = null;
 
     function createGrid() {
       for (let i = 0; i < 100; i++) {
         const square = document.createElement('div');
         square.className = 'square';
-        square.addEventListener('click', () => openModal(i));
+        square.addEventListener('click', () => handleClaim(square, i));
         const label = document.createElement('span');
         label.textContent = i + 1;
         square.appendChild(label);
@@ -253,28 +204,14 @@
       }
     }
 
-    function openModal(index) {
+    function handleClaim(square, index) {
       if (squares[index].claimedBy) return;
-      selectedSquare = index;
-      document.getElementById('squareNumber').textContent = index + 1;
-      document.getElementById('modal').style.display = 'flex';
-    }
-
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-      document.getElementById('inputName').value = '';
-      document.getElementById('inputEmail').value = '';
-      document.getElementById('confirmPayment').checked = false;
-    }
-
-    function submitClaim() {
-      const name = document.getElementById('inputName').value;
-      if (!name) return alert("Please enter your name");
-      squares[selectedSquare].claimedBy = name;
-      const square = squares[selectedSquare].element;
-      square.classList.add('filled');
-      square.querySelector('span').textContent = name;
-      closeModal();
+      const name = prompt('Enter your name to claim this square:');
+      if (name) {
+        squares[index].claimedBy = name;
+        square.classList.add('filled');
+        square.querySelector('span').textContent = name;
+      }
     }
 
     function startCountdown() {
