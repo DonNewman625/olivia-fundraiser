@@ -74,17 +74,42 @@
     .section li {
       margin-bottom: 8px;
     }
-    #grid {
-      display: grid;
-      grid-template-columns: repeat(10, 1fr);
-      gap: 5px;
-      max-width: 600px;
+    #grid-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       margin: 30px auto;
+      overflow-x: auto;
+    }
+    #grid-wrapper {
+      display: grid;
+      grid-template-columns: 30px repeat(10, 1fr);
+    }
+    .row-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f1f1f1;
+      font-weight: bold;
+      border: 1px solid #ccc;
+    }
+    .col-labels {
+      display: grid;
+      grid-template-columns: 30px repeat(10, 1fr);
+      font-weight: bold;
+      text-align: center;
+    }
+    .col-labels div {
+      border: 1px solid #ccc;
+      background-color: #f1f1f1;
+      padding: 5px 0;
     }
     .square {
-      width: 100%;
-      padding-top: 100%;
-      position: relative;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background-color: #e9ecef;
       border: 1px solid #ccc;
       cursor: pointer;
@@ -97,14 +122,47 @@
       color: white;
       cursor: not-allowed;
     }
-    .square span {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 12px;
-      text-align: center;
-      word-break: break-word;
+    #modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #modalContent {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      text-align: left;
+    }
+    #modalContent h3 {
+      margin-top: 0;
+    }
+    #modalContent input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #modalContent button {
+      padding: 10px 15px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+    #modalContent .cancel {
+      background-color: #ccc;
     }
     footer {
       background-color: #f1f1f1;
@@ -177,37 +235,86 @@
     </div>
   </div>
 
-  <div id="grid"></div>
+  <div id="grid-container">
+    <div>
+      <div class="col-labels">
+        <div></div>
+        <div>0</div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div>
+      </div>
+      <div id="grid-wrapper"></div>
+    </div>
+  </div>
+
+  <div id="modal" style="display:none;">
+    <div id="modalContent">
+      <h3>Reserve Square <span id="squareNumber"></span></h3>
+      <label>Your Name:</label>
+      <input type="text" id="inputName">
+      <label>Email Address:</label>
+      <input type="text" id="inputEmail">
+      <label>
+        <input type="checkbox" id="confirmPayment"> I will Venmo @Magen-Newman-1 $10 per square 🐎
+      </label>
+      <br><br>
+      <button onclick="submitClaim()">Reserve Square</button>
+      <button class="cancel" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
 
   <footer>
     Created with ♥ for Olivia — thanks for supporting her dream!
   </footer>
 
   <script>
-    const grid = document.getElementById('grid');
+    const wrapper = document.getElementById('grid-wrapper');
     const squares = [];
+    let selectedSquare = null;
 
     function createGrid() {
-      for (let i = 0; i < 100; i++) {
-        const square = document.createElement('div');
-        square.className = 'square';
-        square.addEventListener('click', () => handleClaim(square, i));
-        const label = document.createElement('span');
-        label.textContent = i + 1;
-        square.appendChild(label);
-        grid.appendChild(square);
-        squares.push({ element: square, claimedBy: null });
+      for (let row = 0; row < 10; row++) {
+        for (let col = 0; col < 11; col++) {
+          const index = row * 10 + col - 1;
+          const cell = document.createElement('div');
+
+          if (col === 0) {
+            cell.textContent = row;
+            cell.className = 'row-label';
+          } else {
+            cell.className = 'square';
+            const label = document.createElement('span');
+            label.textContent = index + 1;
+            cell.appendChild(label);
+            cell.addEventListener('click', () => openModal(index));
+            squares.push({ element: cell, claimedBy: null });
+          }
+
+          wrapper.appendChild(cell);
+        }
       }
     }
 
-    function handleClaim(square, index) {
+    function openModal(index) {
       if (squares[index].claimedBy) return;
-      const name = prompt('Enter your name to claim this square:');
-      if (name) {
-        squares[index].claimedBy = name;
-        square.classList.add('filled');
-        square.querySelector('span').textContent = name;
-      }
+      selectedSquare = index;
+      document.getElementById('squareNumber').textContent = index + 1;
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('inputName').value = '';
+      document.getElementById('inputEmail').value = '';
+      document.getElementById('confirmPayment').checked = false;
+    }
+
+    function submitClaim() {
+      const name = document.getElementById('inputName').value;
+      if (!name) return alert("Please enter your name");
+      squares[selectedSquare].claimedBy = name;
+      const square = squares[selectedSquare].element;
+      square.classList.add('filled');
+      square.querySelector('span').textContent = name;
+      closeModal();
     }
 
     function startCountdown() {
