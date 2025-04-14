@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Olivia's Horse Show Season Fundraiser</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     body {
-      font-family: 'Raleway', sans-serif;
-      background: #f9fafb;
       margin: 0;
-      padding: 0;
-      color: #1f2937;
+      font-family: 'Raleway', sans-serif;
+      background: #f9fafa;
     }
     header {
       background: #0284c7;
@@ -18,132 +17,134 @@
       padding: 1em;
       display: flex;
       align-items: center;
+      gap: 1em;
     }
     header img {
-      height: 60px;
-      margin-right: 1em;
+      height: 50px;
+      border-radius: 8px;
     }
-    header h1 {
+    h1 {
       margin: 0;
-      font-size: 1.5em;
+      font-size: 1.5rem;
     }
     .countdown {
       text-align: center;
-      padding: 0.5em;
+      font-weight: 500;
       color: #065f46;
-      font-weight: 600;
+      margin: 0.5em 0;
     }
-    .container {
+    .grid-container {
       display: flex;
-      gap: 1em;
+      flex-wrap: wrap;
       justify-content: center;
-      padding: 1em;
-    }
-    .left-img {
-      width: 260px;
-      height: auto;
-      border-radius: 8px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1em;
-      max-width: 1000px;
+      gap: 1.5em;
+      margin: 1.5em;
     }
     .card {
       background: white;
       padding: 1em;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      flex: 1 1 300px;
     }
-    .grid-bottom {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1em;
-      max-width: 1000px;
-      margin: 1em auto;
+    .card h2 {
+      font-size: 1.25em;
+      margin-bottom: 0.5em;
     }
-    .example {
+    .highlight {
+      font-weight: 700;
+      color: #047857;
+    }
+    .see-example {
       color: #047857;
       font-weight: bold;
       cursor: pointer;
     }
+    .table-wrapper {
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+      margin-bottom: 3em;
+    }
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #999;
+      width: 3em;
+      height: 3em;
+      text-align: center;
+      vertical-align: middle;
+      font-weight: bold;
+    }
+    .gold-banner {
+      background: #facc15;
+      font-weight: bold;
+    }
+    .silver-banner {
+      background: #d1d5db;
+      writing-mode: vertical-lr;
+      text-align: center;
+      font-weight: bold;
+    }
     .modal {
       display: none;
       position: fixed;
+      z-index: 1000;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.6);
-      justify-content: center;
-      align-items: center;
     }
     .modal-content {
       background: white;
+      margin: 5% auto;
       padding: 1em;
-      border-radius: 10px;
+      border-radius: 8px;
       max-width: 90%;
+      text-align: center;
     }
     .modal-content img {
       max-width: 100%;
+      border-radius: 8px;
     }
-    .square-grid {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 2em;
-    }
-    .square-grid th, .square-grid td {
-      border: 1px solid #ccc;
-      width: 3em;
-      height: 3em;
-      text-align: center;
-    }
-    .gold-banner {
-      background: gold;
-      font-weight: bold;
-    }
-    .silver-banner {
-      background: silver;
-      font-weight: bold;
-      writing-mode: vertical-lr;
-      text-orientation: mixed;
+    .close {
+      float: right;
+      font-size: 1.5em;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="olivia2.jpg" alt="Olivia smiling">
+    <img src="olivia2.jpg" alt="Olivia riding" />
     <h1>Olivia's Horse Show Season Fundraiser</h1>
   </header>
-  <div class="countdown">Kentucky Derby Countdown: <span id="countdown-timer">Loading...</span></div>
-  <div class="container">
-    <img src="olivia1.jpg" class="left-img" alt="Olivia riding">
-    <div class="grid">
-      <div class="card">
-        <h3>🐎 Game Overview</h3>
-        <ul>
-          <li>10×10 grid = 100 squares</li>
-          <li>$10 per square</li>
-          <li>$500 to the winner</li>
-          <li>$500 goes towards show season</li>
-          <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>📋 How to Join</h3>
-        <ul>
-          <li>Pick your square(s) on the grid below</li>
-          <li>Fill out the form that pops up</li>
-          <li>Venmo @Magen-Newman-1 $10 per square or pay with cash</li>
-          <li>Add a 🐎 emoji and your email in the Venmo note</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="grid-bottom">
+  <div class="countdown">Kentucky Derby Countdown: 19d 1h 10m 49s</div>
+
+  <div class="grid-container">
     <div class="card">
-      <h3>🏁 How to Win</h3>
+      <h2>🐎 Game Overview</h2>
+      <ul>
+        <li>10×10 grid = 100 squares</li>
+        <li>$10 per square</li>
+        <li>$500 to the winner</li>
+        <li>$500 goes towards show season</li>
+        <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>📨 How to Join</h2>
+      <ul>
+        <li>Pick your square(s) on the grid below</li>
+        <li>Fill out the form that pops up</li>
+        <li>Venmo @Magen-Newman-1 $10 per square or pay with cash</li>
+        <li>Add a 🐎 emoji and your email in the Venmo note</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>🏁 How to Win</h2>
       <ul>
         <li>Winning square is based on the last digit of the horses' numbers</li>
         <li>Columns = 🥇 1st place finishers</li>
@@ -152,80 +153,52 @@
       </ul>
     </div>
     <div class="card">
-      <h3>🥇 Multiple Ways to Win</h3>
-      <p>Your square can win in 4 different ways:</p>
+      <h2>🥇 Multiple Ways to Win</h2>
       <ul>
+        <li>Your square can win in 4 different ways:</li>
+        <li>For square <strong>(2, 4)</strong>, you'd win if:</li>
         <li>🥇 Horse #2 and 🥈 Horse #4</li>
         <li>🥇 Horse #2 and 🥈 Horse #14</li>
         <li>🥇 Horse #12 and 🥈 Horse #4</li>
         <li>🥇 Horse #12 and 🥈 Horse #14</li>
       </ul>
-      <p class="example" onclick="document.getElementById('exampleModal').style.display='flex'">See Example Result</p>
+      <div class="see-example" onclick="document.getElementById('modal').style.display='block'">See Example Result</div>
     </div>
   </div>
-  <table class="square-grid">
-    <tr>
-      <th></th>
-      <th colspan="10" class="gold-banner">🥇 1st PLACE HORSE WINNER</th>
-    </tr>
-    <tr>
-      <th></th>
-      <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
-    </tr>
-    <!-- Grid rows -->
-    <tr>
-      <th rowspan="10" class="silver-banner">🥈 2nd PLACE HORSE WINNER</th>
-      <th>0</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-    </tr>
-    <tr>
-      <th>1</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-    </tr>
-    <tr>
-      <th>2</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-    </tr>
-    <tr>
-      <th>3</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-    </tr>
-    <tr>
-      <th>4</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-    </tr>
-    <tr>
-      <th>5</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-    </tr>
-    <tr>
-      <th>6</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-    </tr>
-    <tr>
-      <th>7</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-    </tr>
-    <tr>
-      <th>8</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-    </tr>
-    <tr>
-      <th>9</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-    </tr>
-  </table>
 
-  <div id="exampleModal" class="modal">
+  <div class="table-wrapper">
+    <table>
+      <tr>
+        <th></th>
+        <th colspan="10" class="gold-banner">🥇 1st PLACE HORSE WINNER</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th class="col-label">0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+      </tr>
+      <!-- Rows 0–9 with silver banner -->
+      <tr>
+        <th rowspan="10" class="silver-banner">🥈 2nd PLACE HORSE WINNER</th>
+        <th>0</th>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr><th>1</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>2</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>3</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>4</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>5</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>6</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>7</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>8</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>9</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </table>
+  </div>
+
+  <div id="modal" class="modal">
     <div class="modal-content">
-      <span onclick="document.getElementById('exampleModal').style.display='none'" style="float:right;cursor:pointer">&times;</span>
-      <img src="horseshowfundraiser.png" alt="Example Result">
+      <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
+      <img src="horseshowfundraiser.png" alt="Example Result" />
     </div>
   </div>
-
-  <script>
-    function updateCountdown() {
-      const derbyTime = new Date('May 3, 2025 18:00:00 EST');
-      const now = new Date();
-      const diff = derbyTime - now;
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const m = Math.floor((diff / (1000 * 60)) % 60);
-      const s = Math.floor((diff / 1000) % 60);
-      document.getElementById('countdown-timer').textContent = `${d}d ${h}h ${m}m ${s}s`;
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
 </body>
 </html>
