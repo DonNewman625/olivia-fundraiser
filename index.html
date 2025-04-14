@@ -3,272 +3,184 @@
 <head>
   <meta charset="UTF-8">
   <title>Olivia's Horse Show Season Fundraiser</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Raleway', sans-serif;
-      background-color: #f8f9fa;
-      color: #333;
       margin: 0;
-      padding: 0;
+      font-family: 'Raleway', sans-serif;
+      background: #f7f7f7;
+      color: #333;
     }
-    header {
-      background-color: #007bff;
+    .banner {
+      background-color: #0288D1;
       color: white;
-      padding: 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      padding: 1em 2em;
     }
-    header h1 {
-      margin: 0;
-      font-size: 26px;
-    }
-    .header-logo {
-      height: 60px;
+    .banner img {
+      height: 80px;
+      margin-right: 1em;
+      border-radius: 8px;
     }
     .countdown {
       text-align: center;
-      font-size: 20px;
-      padding: 10px;
-      background-color: #ffffff;
-      color: #28a745;
-      border-bottom: 1px solid #ccc;
+      font-size: 1.1em;
+      color: #388E3C;
+      margin: 1em 0;
     }
-    .content-container {
+    .container {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-      gap: 30px;
+      justify-content: space-between;
+      margin: 0 auto;
+      max-width: 1200px;
+      padding: 0 2em;
     }
-    .photo-left {
-      max-width: 240px;
+    .sidebar {
+      flex: 1;
+      margin-right: 2em;
     }
-    .photo-left img {
+    .sidebar img {
       width: 100%;
       border-radius: 8px;
     }
-    .main-section {
-      flex: 1;
-      max-width: 800px;
+    .cards {
+      flex: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1em;
     }
-    .info-sections {
+    .card {
+      background: white;
+      padding: 1.2em;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .card h3 {
+      margin-top: 0;
       display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
+      align-items: center;
+    }
+    .card h3::before {
+      content: '📋';
+      margin-right: 0.5em;
+    }
+    .card.howto h3::before { content: '🐎'; }
+    .card.multiple h3::before { content: '🥇'; }
+    .card.join h3::before { content: '📨'; }
+    .see-example {
+      color: green;
+      font-weight: bold;
+      margin-top: 1em;
+      cursor: pointer;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
       justify-content: center;
     }
-    .section {
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      flex: 1 1 300px;
-      min-width: 300px;
-    }
-    .highlight-box {
-      background-color: #ffffff;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    .modal-content {
+      background: white;
+      padding: 1em;
       border-radius: 8px;
-      padding: 20px;
+      max-width: 90%;
+      text-align: center;
+      position: relative;
     }
-    .section h2 {
-      color: #155724;
+    .modal-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
     }
-    .section ul {
-      padding-left: 20px;
-    }
-    .see-example {
-      color: #28a745;
-      font-weight: bold;
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
       cursor: pointer;
+      color: #aaa;
     }
-    table {
-      border-collapse: collapse;
-      margin: 30px auto;
-    }
-    th, td {
-      border: 1px solid #333;
-      padding: 0.5em;
-      text-align: center;
-    }
-    .gold-banner {
-      background: gold;
-      font-weight: bold;
-      text-align: center;
-      font-size: 1.1em;
-    }
-    .silver-banner {
-      background: silver;
-      font-weight: bold;
-      text-align: center;
-      vertical-align: middle;
-    }
-    .col-label, .row-label {
-      font-weight: bold;
-      background: #f0f0f0;
-    }
-    .square {
-      width: 3em;
-      height: 3em;
-      cursor: pointer;
-    }
-    .claimed {
-      background: #4CAF50;
-      color: white;
-      font-weight: bold;
-    }
-    footer {
-      background-color: #f1f1f1;
-      padding: 15px;
-      font-size: 14px;
-      color: #666;
-      text-align: center;
-    }
+    .close:hover { color: #000; }
   </style>
 </head>
 <body>
-  <header>
+  <div class="banner">
+    <img src="olivia2.jpg" alt="Olivia smiling on horse">
     <h1>Olivia's Horse Show Season Fundraiser</h1>
-    <img src="horseshowfundraiser.png" alt="Fundraiser Logo" class="header-logo">
-  </header>
-
-  <div class="countdown">
-    Kentucky Derby Countdown: <span id="timer"></span>
   </div>
 
-  <div class="content-container">
-    <div class="photo-left">
+  <div class="countdown">
+    Kentucky Derby Countdown: 19d 1h 10m 49s
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
       <img src="olivia1.jpg" alt="Olivia riding her horse proudly">
     </div>
-    <div class="main-section">
-      <div class="info-sections">
-        <div class="section">
-          <h2>🎠 Game Overview</h2>
-          <ul>
-            <li>10×10 grid = 100 squares</li>
-            <li>$10 per square</li>
-            <li>$500 to the winner</li>
-            <li>$500 goes towards show season</li>
-            <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
-          </ul>
-        </div>
-        <div class="section">
-          <h2>📝 How to Join</h2>
-          <ul>
-            <li>Pick your square(s) on the grid below</li>
-            <li>Fill out the form that pops up</li>
-            <li>Venmo @Magen-Newman-1 $10 per square or pay with cash</li>
-            <li>Add a 🐎 emoji and your email in the Venmo note</li>
-          </ul>
-        </div>
-        <div class="highlight-box">
-          <h2>🏁 How to Win</h2>
-          <ul>
-            <li>Winning square is based on the last digit of the horses' numbers</li>
-            <li>Columns = 🥇 1st place finishers</li>
-            <li>Rows = 🥈 2nd place finishers</li>
-            <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square (2, 4) wins</li>
-          </ul>
-        </div>
-        <div class="highlight-box">
-          <h2>🥇 Multiple Ways to Win</h2>
-          <ul>
-            <li>Your square can win in 4 different ways:</li>
-            <li>For square <strong>(2, 4)</strong>, you'd win if:</li>
-            <li>🥇 Horse #2 and 🥈 Horse #4</li>
-            <li>🥇 Horse #2 and 🥈 Horse #14</li>
-            <li>🥇 Horse #12 and 🥈 Horse #4</li>
-            <li>🥇 Horse #12 and 🥈 Horse #14</li>
-          </ul>
-          <span class="see-example">See Example Result</span>
-        </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Game Overview</h3>
+        <ul>
+          <li>10×10 grid = 100 squares</li>
+          <li>$10 per square</li>
+          <li>$500 to the winner</li>
+          <li>$500 goes towards show season</li>
+          <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
+        </ul>
+      </div>
+
+      <div class="card join">
+        <h3>How to Join</h3>
+        <ul>
+          <li>Pick your square(s) on the grid below</li>
+          <li>Fill out the form that pops up</li>
+          <li>Venmo @Magen-Newman-1 $10 per square or pay with cash</li>
+          <li>Add a 🐎 emoji and your email in the Venmo note</li>
+        </ul>
+      </div>
+
+      <div class="card howto">
+        <h3>How to Win</h3>
+        <ul>
+          <li>Winning square is based on the last digit of the horses' numbers</li>
+          <li>Columns = 🥇 1st place finishers</li>
+          <li>Rows = 🥈 2nd place finishers</li>
+          <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square <strong>(2, 4)</strong> wins</li>
+        </ul>
+      </div>
+
+      <div class="card multiple">
+        <h3>Multiple Ways to Win</h3>
+        <p>Your square can win in 4 different ways:</p>
+        <p>For square <strong>(2, 4)</strong>, you'd win if:</p>
+        <ul>
+          <li>🥇 Horse #2 and 🥈 Horse #4</li>
+          <li>🥇 Horse #2 and 🥈 Horse #14</li>
+          <li>🥇 Horse #12 and 🥈 Horse #4</li>
+          <li>🥇 Horse #12 and 🥈 Horse #14</li>
+        </ul>
+        <div class="see-example" onclick="document.getElementById('exampleModal').style.display='flex'">See Example Result</div>
       </div>
     </div>
   </div>
 
-  <table id="fundraiser-grid">
-    <tr>
-      <th></th>
-      <th colspan="11" class="gold-banner">🥇 1st PLACE HORSE WINNER</th>
-    </tr>
-    <tr>
-      <th></th>
-      <th></th>
-      <th class="col-label">0</th>
-      <th class="col-label">1</th>
-      <th class="col-label">2</th>
-      <th class="col-label">3</th>
-      <th class="col-label">4</th>
-      <th class="col-label">5</th>
-      <th class="col-label">6</th>
-      <th class="col-label">7</th>
-      <th class="col-label">8</th>
-      <th class="col-label">9</th>
-    </tr>
-    <script>
-      let html = '';
-      for (let row = 0; row < 10; row++) {
-        html += '<tr>';
-        if (row === 0) html += '<th rowspan="10" class="silver-banner">🥈 2nd<br>PLACE<br>HORSE<br>WINNER</th>';
-        html += `<th class="row-label">${row}</th>`;
-        for (let col = 0; col < 10; col++) {
-          html += `<td class="square" data-row="${row}" data-col="${col}"></td>`;
-        }
-        html += '</tr>';
-      }
-      document.write(html);
-    </script>
-  </table>
-
-  <footer>
-    Created with ♥ for Olivia — thanks for supporting her dream!
-  </footer>
-
-  <script>
-    const squares = document.querySelectorAll('#fundraiser-grid td.square');
-    squares.forEach(cell => {
-      cell.addEventListener('click', () => {
-        if (cell.classList.contains('claimed')) {
-          alert("This square is already claimed!");
-          return;
-        }
-        const name = prompt("Enter your name (First and Last)");
-        if (!name) return;
-        let initials = "";
-        const parts = name.trim().split(/\s+/);
-        if (parts.length >= 2) {
-          initials = parts[0][0] + parts[parts.length-1][0];
-        } else {
-          initials = parts[0].substring(0, 2);
-        }
-        initials = initials.toUpperCase();
-        cell.textContent = initials;
-        cell.classList.add('claimed');
-      });
-    });
-
-    function startCountdown() {
-      const showDate = new Date("2025-05-03T18:00:00-04:00");
-      const timerSpan = document.getElementById('timer');
-      function updateTimer() {
-        const now = new Date();
-        const diff = showDate - now;
-        if (diff <= 0) {
-          timerSpan.textContent = "It’s showtime!";
-          return;
-        }
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const mins = Math.floor((diff / (1000 * 60)) % 60);
-        const secs = Math.floor((diff / 1000) % 60);
-        timerSpan.textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
-      }
-      updateTimer();
-      setInterval(updateTimer, 1000);
-    }
-    startCountdown();
-  </script>
+  <!-- Example Modal -->
+  <div class="modal" id="exampleModal">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('exampleModal').style.display='none'">&times;</span>
+      <h3>Example Result</h3>
+      <p>If horse #13 places 1st and horse #17 places 2nd, the winning square is at (3, 7)</p>
+      <img src="horseshowfundraiser.png" alt="Example Grid Result">
+    </div>
+  </div>
 </body>
 </html>
