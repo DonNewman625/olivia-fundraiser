@@ -15,14 +15,26 @@
     header {
       background-color: #007bff;
       color: white;
-      padding: 20px 0;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    header img {
+      width: 80px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    header .text {
       text-align: center;
     }
-    header h1 {
+    .text h1 {
       margin: 0;
       font-size: 28px;
     }
-    header p {
+    .text p {
       margin: 5px 0 0;
     }
     .countdown {
@@ -59,18 +71,6 @@
     .section li {
       margin-bottom: 8px;
     }
-    .with-image {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 20px;
-    }
-    .with-image img {
-      width: 150px;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
     #grid {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
@@ -103,6 +103,48 @@
       text-align: center;
       word-break: break-word;
     }
+    #modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #modalContent {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      text-align: left;
+    }
+    #modalContent h3 {
+      margin-top: 0;
+    }
+    #modalContent input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #modalContent button {
+      padding: 10px 15px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+    #modalContent .cancel {
+      background-color: #ccc;
+    }
     footer {
       background-color: #f1f1f1;
       padding: 15px;
@@ -114,8 +156,11 @@
 </head>
 <body>
   <header>
-    <h1>Olivia's Horse Show Season Fundraiser</h1>
-    <p>June 21st–22nd, 2025</p>
+    <img src="olivia1.jpg" alt="Olivia">
+    <div class="text">
+      <h1>Olivia's Horse Show Season Fundraiser</h1>
+      <p>June 21st–22nd, 2025</p>
+    </div>
   </header>
 
   <div class="countdown">
@@ -123,42 +168,37 @@
   </div>
 
   <div class="section-container">
-    <div class="section with-image">
-      <img src="olivia1.jpg" alt="Olivia riding her horse proudly">
-      <div>
-        <h2>🎠 Game Overview</h2>
-        <ul>
-          <li>10×10 grid = 100 squares</li>
-          <li>$10 per square</li>
-          <li>$500 to the winner</li>
-          <li>$500 goes towards show season</li>
-          <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
-        </ul>
-      </div>
+    <div class="section">
+      <h2>🎠 Game Overview</h2>
+      <ul>
+        <li>10×10 grid = 100 squares</li>
+        <li>$10 per square</li>
+        <li>$500 to the winner</li>
+        <li>$500 goes towards show season</li>
+        <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
+      </ul>
     </div>
 
-    <div class="section with-image">
-      <div>
-        <h2>🥇 Multiple Ways to Win</h2>
-        <ul>
-          <li>Your square can win in 4 different ways:</li>
-          <li>For square (2, 4), you'd win if:</li>
-          <li>🥇 Horse #2 and 🥈 Horse #4</li>
-          <li>🥇 Horse #2 and 🥈 Horse #14</li>
-          <li>🥇 Horse #12 and 🥈 Horse #4</li>
-          <li>🥇 Horse #12 and 🥈 Horse #14</li>
-        </ul>
-      </div>
-      <img src="olivia2.jpg" alt="Olivia riding her horse smiling">
+    <div class="section">
+      <h2>🥇 Multiple Ways to Win</h2>
+      <ul>
+        <li>Your square can win in 4 different ways:</li>
+        <li>For square (2, 4), you'd win if:</li>
+        <li>🥇 Horse #2 and 🥈 Horse #4</li>
+        <li>🥇 Horse #2 and 🥈 Horse #14</li>
+        <li>🥇 Horse #12 and 🥈 Horse #4</li>
+        <li>🥇 Horse #12 and 🥈 Horse #14</li>
+      </ul>
     </div>
 
     <div class="section">
       <h2>📝 How to Join</h2>
       <ul>
         <li>Pick your square(s) on the grid below</li>
-        <li>Fill out the quick form that pops up</li>
+        <li>Fill out the form that pops up</li>
         <li>Venmo @Magen-Newman-1 $10 per square</li>
         <li>Add a 🐎 emoji and your email in the Venmo note</li>
+        <li>Email: mnewman1013@gmail.com</li>
       </ul>
     </div>
 
@@ -175,6 +215,22 @@
 
   <div id="grid"></div>
 
+  <div id="modal" style="display:none;">
+    <div id="modalContent">
+      <h3>Reserve Square <span id="squareNumber"></span></h3>
+      <label>Your Name:</label>
+      <input type="text" id="inputName">
+      <label>Email Address:</label>
+      <input type="text" id="inputEmail">
+      <label>
+        <input type="checkbox" id="confirmPayment"> I will Venmo @Magen-Newman-1 $10 per square 🐎
+      </label>
+      <br><br>
+      <button onclick="submitClaim()">Reserve Square</button>
+      <button class="cancel" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
   <footer>
     Created with ♥ for Olivia — thanks for supporting her dream!
   </footer>
@@ -182,12 +238,13 @@
   <script>
     const grid = document.getElementById('grid');
     const squares = [];
+    let selectedSquare = null;
 
     function createGrid() {
       for (let i = 0; i < 100; i++) {
         const square = document.createElement('div');
         square.className = 'square';
-        square.addEventListener('click', () => handleClaim(square, i));
+        square.addEventListener('click', () => openModal(i));
         const label = document.createElement('span');
         label.textContent = i + 1;
         square.appendChild(label);
@@ -196,14 +253,28 @@
       }
     }
 
-    function handleClaim(square, index) {
+    function openModal(index) {
       if (squares[index].claimedBy) return;
-      const name = prompt('Enter your name to claim this square:');
-      if (name) {
-        squares[index].claimedBy = name;
-        square.classList.add('filled');
-        square.querySelector('span').textContent = name;
-      }
+      selectedSquare = index;
+      document.getElementById('squareNumber').textContent = index + 1;
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('inputName').value = '';
+      document.getElementById('inputEmail').value = '';
+      document.getElementById('confirmPayment').checked = false;
+    }
+
+    function submitClaim() {
+      const name = document.getElementById('inputName').value;
+      if (!name) return alert("Please enter your name");
+      squares[selectedSquare].claimedBy = name;
+      const square = squares[selectedSquare].element;
+      square.classList.add('filled');
+      square.querySelector('span').textContent = name;
+      closeModal();
     }
 
     function startCountdown() {
