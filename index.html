@@ -1,4 +1,3 @@
-<!-- rebuild -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,31 +6,55 @@
   <title>Olivia's Horse Show Season Fundraiser</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
-      background-color: #f7f7f7;
-      padding: 20px;
+      background-color: #fefefe;
+      padding: 0;
+      margin: 0;
+      color: #333;
     }
-    h1 {
-      margin-bottom: 10px;
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px 0;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+    header p {
+      margin: 5px 0 0;
+      font-size: 16px;
+    }
+    #instructions {
+      max-width: 700px;
+      margin: 0 auto 20px;
+      padding: 0 20px;
+      font-size: 16px;
     }
     #grid {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       grid-gap: 5px;
-      max-width: 500px;
-      margin: 20px auto;
+      max-width: 600px;
+      margin: 0 auto 30px;
     }
     .square {
       width: 100%;
       padding-top: 100%;
       position: relative;
-      background-color: #fff;
+      background-color: #e9ecef;
       border: 1px solid #ccc;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .square:hover {
+      background-color: #d4e3f9;
     }
     .square.filled {
-      background-color: #cce5ff;
+      background-color: #6cace4;
+      color: white;
       cursor: not-allowed;
     }
     .square span {
@@ -42,13 +65,31 @@
       font-size: 12px;
       text-align: center;
       word-break: break-word;
+      padding: 5px;
+    }
+    footer {
+      background-color: #f1f1f1;
+      padding: 15px;
+      font-size: 14px;
+      color: #666;
     }
   </style>
 </head>
 <body>
-  <h1>Olivia's Horse Show Season Fundraiser</h1>
-  <p>Click a square to claim it with your name! (No payments required)</p>
+  <header>
+    <h1>Olivia's Horse Show Season Fundraiser</h1>
+    <p>Click a square below to claim it with your name!</p>
+  </header>
+
+  <div id="instructions">
+    <p>Select any available square to claim it. Once your name is entered, that square will be marked and no one else can choose it. This is a fun and simple way to support Olivia’s upcoming horse show season — thank you for participating!</p>
+  </div>
+
   <div id="grid"></div>
+
+  <footer>
+    Created with ♥ for Olivia's journey — thank you for your support!
+  </footer>
 
   <script>
     const grid = document.getElementById('grid');
