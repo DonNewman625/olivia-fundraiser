@@ -23,8 +23,9 @@
       justify-content: center;
     }
     .banner img {
-      height: 50px;
+      height: 80px;
       margin-right: 1em;
+      object-fit: contain;
     }
     .countdown {
       color: #388e3c;
@@ -38,7 +39,10 @@
     }
     .photo {
       max-width: 250px;
+      max-height: 350px;
       margin-right: 2em;
+      object-fit: cover;
+      border-radius: 8px;
     }
     .info {
       display: flex;
@@ -65,8 +69,8 @@
     }
     th, td {
       border: 1px solid #ccc;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       text-align: center;
       font-size: 0.85em;
     }
@@ -150,7 +154,6 @@
         <th></th>
         <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
       </tr>
-      <!-- 10 rows with vertical silver banner -->
       <tr>
         <th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>
         <th>0</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
