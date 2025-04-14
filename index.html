@@ -23,15 +23,15 @@
       justify-content: center;
     }
     .banner img {
-      height: 80px;
+      height: 60px;
       margin-right: 1em;
     }
     .countdown-banner {
-      background-color: #e8f5e9;
+      background: #d1ecf1;
+      color: #0c5460;
       padding: 1em;
       font-size: 1.2em;
       font-weight: bold;
-      color: #2e7d32;
     }
     .container {
       display: flex;
@@ -74,7 +74,6 @@
       height: 40px;
       text-align: center;
       font-size: 0.9em;
-      cursor: pointer;
     }
     .top-banner-label {
       background: #ffce34;
@@ -86,45 +85,14 @@
       writing-mode: vertical-rl;
       text-orientation: mixed;
     }
-    .claimed {
-      background-color: #4caf50;
-      color: white;
-      font-weight: bold;
-    }
     .footer {
       margin-top: 2em;
       font-size: 0.9em;
       color: #555;
     }
-    #popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 2em;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      z-index: 9999;
-    }
-    #popup input {
-      margin: 0.5em 0;
-      padding: 0.5em;
-      width: 100%;
-    }
-    #popup button {
-      padding: 0.5em 1em;
-      background: #039be5;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin-top: 0.5em;
-    }
   </style>
 </head>
 <body>
-
   <div class="banner">
     <img src="olivia2.jpg" alt="Olivia smiling on horse" />
     Olivia's Horse Show Season Fundraiser
@@ -180,14 +148,15 @@
       <tr>
         <th></th>
         <th></th>
-        <th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER<br> - - - - - - - - - -</th>
+        <th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER<br />- - - - - - - - - -
+        </th>
       </tr>
       <tr>
         <th></th>
         <th></th>
         <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
       </tr>
-      <tr><th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-<br>-</th><th>0</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+      <tr><th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER<br />-<br />-<br />-<br />-<br />-<br />-<br />-<br />-<br />-<br />-</th><th>0</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
       <tr><th>1</th><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td></tr>
       <tr><th>2</th><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td></tr>
       <tr><th>3</th><td>31</td><td>32</td><td>33</td><td>34</td><td>35</td><td>36</td><td>37</td><td>38</td><td>39</td><td>40</td></tr>
@@ -203,38 +172,5 @@
   <div class="footer">
     Created with ❤️ for Olivia — Thanks for supporting her dream!
   </div>
-
-  <div id="popup">
-    <h3>Claim Your Square</h3>
-    <input type="text" id="name" placeholder="Your Name">
-    <input type="email" id="email" placeholder="Your Email">
-    <p style="font-size: 0.85em;">Venmo <strong>@Magen-Newman-1</strong> $10 per square or pay with cash.<br>Add a 🐎 emoji and your email in the Venmo note.</p>
-    <button onclick="submitClaim()">Submit</button>
-  </div>
-
-  <script>
-    let selectedCell;
-
-    document.querySelectorAll('td').forEach(cell => {
-      cell.addEventListener('click', function () {
-        if (!this.classList.contains('claimed')) {
-          selectedCell = this;
-          document.getElementById('popup').style.display = 'block';
-        }
-      });
-    });
-
-    function submitClaim() {
-      const name = document.getElementById('name').value.trim();
-      if (name && selectedCell) {
-        const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 3);
-        selectedCell.textContent = initials;
-        selectedCell.classList.add('claimed');
-        document.getElementById('popup').style.display = 'none';
-        document.getElementById('name').value = '';
-        document.getElementById('email').value = '';
-      }
-    }
-  </script>
 </body>
 </html>
