@@ -1,111 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Olivia's Horse Show Fundraiser</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
       font-family: 'Raleway', sans-serif;
-      background-color: #f8f9fa;
+      margin: 0;
+      background: #f7f8f9;
       color: #222;
     }
     .top-banner {
       background-color: #0288d1;
-      padding: 1rem 0;
-    }
-    .top-banner-content {
+      padding: 12px 0;
+      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
     }
     .top-banner img {
-      height: 60px;
-      border-radius: 5px;
-    }
-    .top-banner h1 {
-      color: white;
-      margin: 0;
-      font-size: 1.5rem;
+      height: 45px;
+      margin-right: 10px;
     }
     .countdown {
       text-align: center;
-      margin: 1rem 0;
-      color: #4CAF50;
+      margin: 10px 0;
+      color: #4caf50;
       font-weight: bold;
     }
     .content {
       display: grid;
       grid-template-columns: 250px 1fr;
-      gap: 2rem;
-      max-width: 1200px;
-      margin: auto;
-      padding: 1rem;
-    }
-    .left-image img {
-      width: 100%;
-      border-radius: 5px;
+      gap: 24px;
+      padding: 20px;
     }
     .info-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+      gap: 16px;
     }
     .card {
-      background-color: white;
-      padding: 1rem;
+      background: white;
+      padding: 16px;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    }
-    .card h2 {
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
-    .card ul {
-      padding-left: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
     .see-example {
       color: #0288d1;
       font-weight: bold;
-      display: inline-block;
-      margin-top: 0.5rem;
       cursor: pointer;
+      margin-top: 10px;
     }
     .grid-wrapper {
-      max-width: 1000px;
-      margin: 2rem auto;
+      padding: 20px;
     }
     table {
       border-collapse: collapse;
       width: 100%;
-      text-align: center;
     }
     th, td {
       border: 1px solid #ccc;
-      padding: 0.75rem;
-      min-width: 40px;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      vertical-align: middle;
     }
     .top-banner-label {
-      background-color: #ffcf33;
+      background: #ffce34;
       font-weight: bold;
     }
     .left-banner-label {
-      background-color: #ccc;
-      font-weight: bold;
-      writing-mode: vertical-lr;
+      background: #ccc;
+      writing-mode: vertical-rl;
       transform: rotate(180deg);
+      font-weight: bold;
+    }
+    .footer {
+      text-align: center;
+      font-size: 0.9em;
+      margin: 30px auto 20px;
+      color: #777;
     }
   </style>
 </head>
 <body>
   <div class="top-banner">
-    <div class="top-banner-content">
-      <img src="olivia2.jpg" alt="Olivia smiling on horse" />
-      <h1>Olivia's Horse Show Season Fundraiser</h1>
-    </div>
+    <img src="olivia2.jpg" alt="Olivia riding" />
+    <h1>Olivia's Horse Show Season Fundraiser</h1>
   </div>
 
   <div class="countdown">
@@ -113,12 +95,11 @@
   </div>
 
   <div class="content">
-    <div class="left-image">
-      <img src="olivia1.jpg" alt="Olivia riding her horse" />
-    </div>
+    <img src="olivia1.jpg" alt="Olivia riding proudly" width="100%" style="border-radius: 10px;" />
+
     <div class="info-grid">
       <div class="card">
-        <h2>🐎 Game Overview</h2>
+        <h3>🐴 Game Overview</h3>
         <ul>
           <li>10×10 grid = 100 squares</li>
           <li>$10 per square</li>
@@ -128,7 +109,7 @@
         </ul>
       </div>
       <div class="card">
-        <h2>📩 How to Join</h2>
+        <h3>📩 How to Join</h3>
         <ul>
           <li>Pick your square(s) on the grid below</li>
           <li>Fill out the form that pops up</li>
@@ -137,7 +118,7 @@
         </ul>
       </div>
       <div class="card">
-        <h2>⚖️ How to Win</h2>
+        <h3>⚔️ How to Win</h3>
         <ul>
           <li>Winning square is based on the last digit of the horses' numbers</li>
           <li>Columns = 🥇 1st place finishers</li>
@@ -146,7 +127,9 @@
         </ul>
       </div>
       <div class="card">
-        <h2>🧳 Multiple Ways to Win</h2>
+        <h3>🥇 Multiple Ways to Win</h3>
+        <p>Your square can win in 4 different ways:<br>
+        For square <strong>(2, 4)</strong>, you'd win if:</p>
         <ul>
           <li>🥇 Horse #2 and 🥈 Horse #4</li>
           <li>🥇 Horse #2 and 🥈 Horse #14</li>
@@ -165,16 +148,46 @@
         <th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th>
       </tr>
       <tr>
-        <th class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>
+        <th></th>
         <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
       </tr>
-      <!-- Example single row -->
+      <!-- Data rows 0-9 -->
       <tr>
-        <th>0</th>
-        <td>o</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>
+        <th>0</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
       </tr>
-      <!-- You can add the other 9 rows similarly -->
+      <tr>
+        <th>1</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <th>2</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <th>3</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <th>4</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <th>5</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <th>6</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <th>7</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <th>8</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <th>9</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
     </table>
+  </div>
+
+  <div class="footer">
+    Created with ❤️ for Olivia — Thanks for supporting her dream!
   </div>
 </body>
 </html>
