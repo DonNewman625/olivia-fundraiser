@@ -23,26 +23,26 @@
       justify-content: center;
     }
     .banner img {
-      height: 60px;
+      height: 50px;
       margin-right: 1em;
     }
-    .countdown-banner {
-      background-color: #fbc02d;
-      padding: 0.5em;
-      font-size: 1.2em;
-      font-weight: bold;
+    .countdown {
+      background: #e3f2fd;
       color: #2e7d32;
+      font-size: 1.5em;
+      padding: 0.5em;
+      font-weight: bold;
     }
     .container {
       display: flex;
       justify-content: center;
       margin-top: 1em;
+      flex-wrap: wrap;
     }
     .photo {
-      width: 250px;
-      height: auto;
-      object-fit: contain;
+      max-width: 250px;
       margin-right: 2em;
+      object-fit: contain;
     }
     .info {
       display: flex;
@@ -72,7 +72,7 @@
       width: 40px;
       height: 40px;
       text-align: center;
-      font-size: 0.85em;
+      font-size: 0.9em;
     }
     .top-banner-label {
       background: #ffce34;
@@ -83,58 +83,55 @@
       font-weight: bold;
       writing-mode: vertical-rl;
       text-orientation: mixed;
-      width: 40px;
     }
     .footer {
       margin-top: 2em;
       font-size: 0.9em;
       color: #555;
     }
-    .square-reserved {
-      background-color: #4caf50;
-      color: white;
-      font-weight: bold;
-    }
-    .modal {
+    .popup {
       display: none;
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       background: white;
-      padding: 1em;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      padding: 2em;
       border-radius: 8px;
-      z-index: 1000;
-    }
-    .modal input {
-      display: block;
-      width: 100%;
-      margin-bottom: 0.5em;
-      padding: 0.5em;
-    }
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
       z-index: 999;
+    }
+    .popup input {
+      margin: 0.5em 0;
+      padding: 0.5em;
+      width: 100%;
+    }
+    .popup button {
+      padding: 0.5em 1em;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 0.5em;
+    }
+    .square.claimed {
+      background: #4CAF50;
+      color: white;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
+
   <div class="banner">
     <img src="olivia2.jpg" alt="Olivia smiling on horse" />
     Olivia's Horse Show Season Fundraiser
   </div>
-  <div class="countdown-banner">
-    Kentucky Derby Countdown: 19d 1h 10m 49s
-  </div>
+  <div class="countdown">Kentucky Derby Countdown: 19d 1h 10m 49s</div>
+
   <div class="container">
     <img src="olivia1.jpg" class="photo" alt="Olivia riding horse" />
+
     <div class="info">
       <div class="card">
         <h3>🐴 Game Overview</h3>
@@ -176,33 +173,62 @@
       </div>
     </div>
   </div>
+
   <div class="grid-wrapper">
     <table>
-      <tr>
-        <th></th>
-        <th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th>
-      </tr>
-      <tr>
-        <th></th>
-        <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
-      </tr>
-      <tr>
-        <th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>
+      <tr><th></th><th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th></tr>
+      <tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
+      <tr><th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>
         <th>0</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td>
       </tr>
-      <tr><th>1</th><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td></tr>
-      <tr><th>2</th><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td></tr>
-      <tr><th>3</th><td>30</td><td>31</td><td>32</td><td>33</td><td>34</td><td>35</td><td>36</td><td>37</td><td>38</td><td>39</td></tr>
-      <tr><th>4</th><td>40</td><td>41</td><td>42</td><td>43</td><td>44</td><td>45</td><td>46</td><td>47</td><td>48</td><td>49</td></tr>
-      <tr><th>5</th><td>50</td><td>51</td><td>52</td><td>53</td><td>54</td><td>55</td><td>56</td><td>57</td><td>58</td><td>59</td></tr>
-      <tr><th>6</th><td>60</td><td>61</td><td>62</td><td>63</td><td>64</td><td>65</td><td>66</td><td>67</td><td>68</td><td>69</td></tr>
-      <tr><th>7</th><td>70</td><td>71</td><td>72</td><td>73</td><td>74</td><td>75</td><td>76</td><td>77</td><td>78</td><td>79</td></tr>
-      <tr><th>8</th><td>80</td><td>81</td><td>82</td><td>83</td><td>84</td><td>85</td><td>86</td><td>87</td><td>88</td><td>89</td></tr>
-      <tr><th>9</th><td>90</td><td>91</td><td>92</td><td>93</td><td>94</td><td>95</td><td>96</td><td>97</td><td>98</td><td>99</td></tr>
+      <!-- Additional rows to be generated by JS -->
+      <tbody id="grid-body"></tbody>
     </table>
   </div>
+
+  <div class="popup" id="popup">
+    <h3 id="square-title">Reserve Square</h3>
+    <input type="text" id="name" placeholder="Your Name">
+    <input type="email" id="email" placeholder="Email Address">
+    <p style="font-size: 0.85em; margin-top: 1em;">Venmo <strong>@Magen-Newman-1</strong> $10 per square or pay with cash. Add a 🐎 emoji and your email in the Venmo note.</p>
+    <button onclick="claimSquare()">Reserve</button>
+  </div>
+
   <div class="footer">
     Created with ❤️ for Olivia — Thanks for supporting her dream!
   </div>
+
+  <script>
+    const gridBody = document.getElementById('grid-body');
+    const popup = document.getElementById('popup');
+    let selectedCell;
+
+    for (let i = 1; i < 10; i++) {
+      let row = '<tr><th>' + i + '</th>';
+      for (let j = 0; j < 10; j++) {
+        let number = i * 10 + j + 1;
+        row += `<td onclick="openPopup(this, ${number})">${number}</td>`;
+      }
+      row += '</tr>';
+      gridBody.innerHTML += row;
+    }
+
+    function openPopup(cell, number) {
+      selectedCell = cell;
+      document.getElementById('square-title').innerText = `Reserve Square ${number}`;
+      popup.style.display = 'block';
+    }
+
+    function claimSquare() {
+      const name = document.getElementById('name').value;
+      if (name.trim() !== '') {
+        selectedCell.classList.add('claimed');
+        selectedCell.innerText = name.split(' ').map(n => n[0]).join('').toUpperCase();
+        popup.style.display = 'none';
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+      }
+    }
+  </script>
 </body>
 </html>
