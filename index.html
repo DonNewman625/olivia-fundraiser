@@ -91,38 +91,49 @@
       font-size: 0.9em;
       color: #555;
     }
-    .reserved {
-      background-color: #66bb6a;
-      color: white;
-    }
-    #popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 1em;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    .modal {
       display: none;
-      z-index: 1000;
-    }
-    #popup input {
-      display: block;
-      width: 100%;
-      margin-bottom: 0.5em;
-      padding: 0.5em;
-    }
-    #overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.3);
-      display: none;
-      z-index: 999;
+      background: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: white;
+      padding: 1.5em;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .modal-content input[type="text"],
+    .modal-content input[type="email"] {
+      width: 100%;
+      padding: 0.5em;
+      margin: 0.5em 0;
+      font-size: 1em;
+    }
+    .modal-content input[type="checkbox"] {
+      margin-right: 0.5em;
+    }
+    .modal-content button {
+      background: #4caf50;
+      color: white;
+      padding: 0.5em 1em;
+      border: none;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5em;
+    }
+    .reserved {
+      background: #4caf50;
+      color: white;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -132,7 +143,6 @@
     Olivia's Horse Show Season Fundraiser
   </div>
   <div class="countdown-banner" id="countdown">Kentucky Derby Countdown: Loading...</div>
-
   <div class="container">
     <img src="olivia1.jpg" class="photo" alt="Olivia riding horse" />
     <div class="info">
@@ -180,17 +190,18 @@
   <div class="grid-wrapper">
     <table id="square-grid">
       <tr><th></th><th></th><th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th></tr>
-      <tr><th></th><th></th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th></tr>
+      <tr><th></th><th></th><th colspan="10">- - - - - - - - - -</th></tr>
       <script>
         for (let row = 0; row < 10; row++) {
-          document.write('<tr>');
-          if (row === 0) document.write('<th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>');
-          document.write('<th>-</th>');
+          let html = `<tr>`;
+          if (row === 0) html += `<th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>`;
+          html += `<th>-</th>`;
           for (let col = 0; col < 10; col++) {
-            let num = row * 10 + col + 1;
-            document.write(`<td id="square-${num}" onclick="reserveSquare(${num})">${num}</td>`);
+            const num = row * 10 + col + 1;
+            html += `<td onclick="openModal(${num}, this)">${num}</td>`;
           }
-          document.write('</tr>');
+          html += `</tr>`;
+          document.write(html);
         }
       </script>
     </table>
@@ -200,15 +211,41 @@
     Created with ❤️ for Olivia — Thanks for supporting her dream!
   </div>
 
-  <div id="overlay"></div>
-  <div id="popup">
-    <h3 id="popup-title"></h3>
-    <input type="text" id="name" placeholder="Your Name">
-    <input type="email" id="email" placeholder="Email Address">
-    <button onclick="submitReservation()">Reserve</button>
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h3 id="modal-title">Reserve Square</h3>
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Email Address" required />
+      <label><input type="checkbox" id="confirm" /> I will Venmo @Magen-Newman-1 $10</label>
+      <br>
+      <button onclick="reserveSquare()">Reserve</button>
+    </div>
   </div>
 
   <script>
+    let selectedCell;
+    function openModal(num, cell) {
+      selectedCell = cell;
+      document.getElementById("modal-title").textContent = `Reserve Square ${num}`;
+      document.getElementById("modal").style.display = "flex";
+    }
+    function reserveSquare() {
+      const name = document.getElementById("name").value;
+      const confirm = document.getElementById("confirm").checked;
+      if (!name || !confirm) return alert("Please complete all fields and confirm payment.");
+      const initials = name.split(" ").map(w => w[0]).join("").toUpperCase();
+      selectedCell.textContent = initials;
+      selectedCell.classList.add("reserved");
+      document.getElementById("modal").style.display = "none";
+      document.getElementById("name").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("confirm").checked = false;
+    }
+    window.onclick = function(event) {
+      if (event.target.id === "modal") {
+        document.getElementById("modal").style.display = "none";
+      }
+    }
     const derbyDate = new Date("2025-05-03T17:00:00-05:00").getTime();
     const countdownEl = document.getElementById("countdown");
     setInterval(() => {
@@ -220,28 +257,6 @@
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
       countdownEl.textContent = `Kentucky Derby Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
-
-    let selectedSquare = null;
-    function reserveSquare(number) {
-      selectedSquare = number;
-      document.getElementById("popup-title").textContent = `Reserve Square ${number}`;
-      document.getElementById("overlay").style.display = 'block';
-      document.getElementById("popup").style.display = 'block';
-    }
-
-    function submitReservation() {
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      if (name && email && selectedSquare) {
-        const square = document.getElementById(`square-${selectedSquare}`);
-        square.classList.add("reserved");
-        square.textContent = name.match(/\b\w/g).join('').toUpperCase();
-        document.getElementById("popup").style.display = 'none';
-        document.getElementById("overlay").style.display = 'none';
-        document.getElementById("name").value = '';
-        document.getElementById("email").value = '';
-      }
-    }
   </script>
 </body>
 </html>
