@@ -60,11 +60,16 @@
       margin-bottom: 1em;
       text-align: left;
     }
-    .grid-and-list {
+    .main-section {
       display: flex;
       justify-content: center;
-      gap: 2em;
       margin-top: 2em;
+      gap: 2em;
+    }
+    .grid-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     table {
       border-collapse: collapse;
@@ -75,7 +80,6 @@
       height: 40px;
       text-align: center;
       font-size: 0.9em;
-      cursor: pointer;
     }
     .top-banner-label {
       background: #ffce34;
@@ -87,19 +91,21 @@
       writing-mode: vertical-rl;
       text-orientation: mixed;
     }
+    .footer {
+      margin-top: 3em;
+      padding: 1em;
+      font-size: 1em;
+      color: #555;
+    }
     .reserved {
       background-color: #66bb6a;
       color: white;
     }
     .selected {
-      outline: 3px solid orange;
+      background-color: orange;
+      color: white;
     }
-    .footer {
-      margin-top: 2em;
-      font-size: 0.9em;
-      color: #555;
-    }
-    #popup {
+    #popup, #overlay {
       position: fixed;
       top: 50%;
       left: 50%;
@@ -111,52 +117,37 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       display: none;
       z-index: 1000;
-      width: 300px;
     }
-    #popup input, #popup label {
-      display: block;
+    #popup input[type="text"], #popup input[type="email"] {
       width: 100%;
       margin-bottom: 0.5em;
       padding: 0.5em;
     }
-    #popup label {
-      padding: 0;
-      text-align: left;
-    }
     #overlay {
-      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0,0,0,0.3);
-      display: none;
       z-index: 999;
     }
-    .reservation-list {
+    #reservations {
       max-height: 400px;
       overflow-y: auto;
-      padding: 1em;
       text-align: left;
-      width: 250px;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
     }
-    .reservation-list div {
-      margin: 0.25em 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .remove-btn {
-      color: red;
+    #reserveBtn {
+      margin-top: 1em;
+      padding: 0.5em 1em;
+      background: #039be5;
+      color: white;
+      border: none;
+      border-radius: 4px;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
-
   <div class="banner">
     <img src="olivia2.jpg" alt="Olivia smiling on horse" />
     Olivia's Horse Show Season Fundraiser
@@ -180,9 +171,9 @@
         <h3>📨 How to Join</h3>
         <ul>
           <li>Pick your square(s) on the grid below</li>
-          <li>Fill out the form that pops up</li>
+          <li>Click "Reserve Selected Squares" to fill out the form</li>
           <li>Venmo @Magen-Newman-1 $10 per square or pay with cash</li>
-          <li>Add a 🐎 emoji and your email in the Venmo note</li>
+          <li>Add a 🏏 emoji and your email in the Venmo note</li>
         </ul>
       </div>
       <div class="card">
@@ -191,7 +182,7 @@
           <li>Winning square is based on the last digit of the horses' numbers</li>
           <li>Columns = 🥇 1st place finishers</li>
           <li>Rows = 🥈 2nd place finishers</li>
-          <li>Example: If horse #12 wins 🥇 and #4 comes 🥈 → square <strong>(2, 4)</strong> wins</li>
+          <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square <strong>(2, 4)</strong> wins</li>
         </ul>
       </div>
       <div class="card">
@@ -202,12 +193,11 @@
           <li>🥇 Horse #12 and 🥈 Horse #4</li>
           <li>🥇 Horse #12 and 🥈 Horse #14</li>
         </ul>
-        <div class="see-example-result">See Example Result</div>
       </div>
     </div>
   </div>
 
-  <div class="grid-and-list">
+  <div class="main-section">
     <div class="grid-wrapper">
       <table id="square-grid">
         <tr><th></th><th></th><th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th></tr>
@@ -218,28 +208,32 @@
             if (row === 0) document.write('<th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>');
             document.write('<th>-</th>');
             for (let col = 0; col < 10; col++) {
-              const num = row * 10 + col + 1;
+              let num = row * 10 + col + 1;
               document.write(`<td id="square-${num}" onclick="toggleSquare(${num})">${num}</td>`);
             }
             document.write('</tr>');
           }
         </script>
       </table>
+      <button id="reserveBtn" onclick="showPopup()">Reserve Selected Squares</button>
     </div>
     <div>
       <h3>Reservations</h3>
-      <div id="reservation-list" class="reservation-list"></div>
+      <div id="reservations"></div>
     </div>
   </div>
 
-  <div class="footer">Created with ❤️ for Olivia — Thanks for supporting her dream!</div>
+  <div class="footer">
+    Created with ❤️ for Olivia — Thanks for supporting her dream!
+  </div>
 
   <div id="overlay"></div>
   <div id="popup">
-    <h3 id="popup-title"></h3>
+    <h3 id="popup-title">Reservation</h3>
     <input type="text" id="name" placeholder="Your Name">
     <input type="email" id="email" placeholder="Email Address">
-    <label><input type="checkbox" id="venmoConfirm"> I confirm I paid via Venmo @Magen-Newman-1 or cash</label>
+    <label><input type="checkbox" id="paymentConfirm"> I confirm I paid via Venmo @Magen-Newman-1 or cash</label>
+    <br><br>
     <button onclick="submitReservation()">Reserve</button>
   </div>
 
@@ -256,95 +250,56 @@
       countdownEl.textContent = `Kentucky Derby Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
 
-    let selectedSquares = [];
+    const selectedSquares = new Set();
     const reservations = [];
-    let isAdmin = false;
 
     function toggleSquare(num) {
       const cell = document.getElementById(`square-${num}`);
       if (cell.classList.contains("reserved")) return;
-
-      const index = selectedSquares.indexOf(num);
-      if (index > -1) {
-        selectedSquares.splice(index, 1);
+      if (cell.classList.contains("selected")) {
         cell.classList.remove("selected");
+        selectedSquares.delete(num);
       } else {
-        selectedSquares.push(num);
         cell.classList.add("selected");
+        selectedSquares.add(num);
       }
+    }
 
-      if (selectedSquares.length > 0) {
-        document.getElementById("popup-title").textContent = `Reserving squares: ${selectedSquares.join(", ")}`;
-        document.getElementById("overlay").style.display = 'block';
-        document.getElementById("popup").style.display = 'block';
-      }
+    function showPopup() {
+      if (selectedSquares.size === 0) return alert("Please select at least one square.");
+      document.getElementById("popup-title").textContent = `Reserving squares: ${Array.from(selectedSquares).join(', ')}`;
+      document.getElementById("overlay").style.display = 'block';
+      document.getElementById("popup").style.display = 'block';
     }
 
     function submitReservation() {
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const venmo = document.getElementById("venmoConfirm").checked;
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const confirmed = document.getElementById("paymentConfirm").checked;
+      if (!name || !email || !confirmed) return alert("Please complete all fields and confirm payment.");
 
-      if (!name || !email || !venmo) return alert("All fields and confirmation required.");
-      const initials = name.split(" ").map(n => n[0]).join("").toUpperCase();
-
+      const initials = name.match(/\b\w/g).join('').toUpperCase();
       selectedSquares.forEach(num => {
         const cell = document.getElementById(`square-${num}`);
-        cell.textContent = initials;
-        cell.classList.add("reserved");
         cell.classList.remove("selected");
-        cell.onclick = null;
-        reservations.push({ name, email, square: num });
-        fetch("https://script.google.com/macros/s/AKfycbxrySUOxGTtc7WEnlDIdWRuttBLZ_PPbOhWTLSOMbi5MnDlwy3IxFm0LCJ98mVE11aI/exec", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ square: num, initials, name, email })
-        });
+        cell.classList.add("reserved");
+        cell.textContent = initials;
+        reservations.push(name);
       });
+      selectedSquares.clear();
 
-      updateReservationList();
-      document.getElementById("popup").style.display = 'none';
+      renderReservations();
       document.getElementById("overlay").style.display = 'none';
-      selectedSquares = [];
+      document.getElementById("popup").style.display = 'none';
       document.getElementById("name").value = '';
       document.getElementById("email").value = '';
-      document.getElementById("venmoConfirm").checked = false;
+      document.getElementById("paymentConfirm").checked = false;
     }
 
-    function updateReservationList() {
-      const list = document.getElementById("reservation-list");
-      list.innerHTML = '';
-      reservations.forEach((res, index) => {
-        const item = document.createElement("div");
-        item.textContent = res.name;
-        if (isAdmin) {
-          const btn = document.createElement("span");
-          btn.textContent = "❌";
-          btn.className = "remove-btn";
-          btn.onclick = () => removeReservation(index);
-          item.appendChild(btn);
-        }
-        list.appendChild(item);
-      });
+    function renderReservations() {
+      const resDiv = document.getElementById("reservations");
+      resDiv.innerHTML = '<ul>' + [...new Set(reservations)].map(name => `<li>${name}</li>`).join('') + '</ul>';
     }
-
-    function removeReservation(index) {
-      const res = reservations[index];
-      const cell = document.getElementById(`square-${res.square}`);
-      cell.textContent = res.square;
-      cell.classList.remove("reserved");
-      cell.onclick = () => toggleSquare(res.square);
-      reservations.splice(index, 1);
-      updateReservationList();
-    }
-
-    // Ask for admin code
-    window.onload = function () {
-      const pw = prompt("Enter admin code (or press cancel):");
-      if (pw === "admin123") isAdmin = true;
-      updateReservationList();
-    };
   </script>
-
 </body>
 </html>
