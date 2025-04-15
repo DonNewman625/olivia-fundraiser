@@ -238,7 +238,8 @@
   </div>
 
   <script>
-    const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxcSZMaBWxgt008Xehfh0YAkjuHV-ce1pAMTIOouMlGMg4uknMSJfxw8nn42FErmReg5A/exec";
+    //const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxcSZMaBWxgt008Xehfh0YAkjuHV-ce1pAMTIOouMlGMg4uknMSJfxw8nn42FErmReg5A/exec";
+    const GOOGLE_SHEETS_WEBAPP_URL = "https://bold-sky-9d7a.don-o-newman.workers.dev";
     const selectedSquares = new Set();
     const reservations = [];
     const reservedDetails = {};
@@ -311,8 +312,7 @@
         reservations.push(name);
       });
     
-      // Send to Google Sheets via doPost-compatible fetch
-      fetch("https://script.google.com/macros/s/AKfycbxrpdSUwp4El-WKoFrF03R2OSN8-OzHk05L0VsMgJMyGRJCQhAmJiQEYb5HJgOPXiY4LA/exec", {
+      fetch(GOOGLE_SHEETS_WEBAPP_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -324,7 +324,7 @@
           date: now
         })
       });
-    
+
       selectedSquares.clear();
       renderReservations();
       document.getElementById("overlay").style.display = 'none';
