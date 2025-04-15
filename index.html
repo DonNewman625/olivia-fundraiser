@@ -264,7 +264,7 @@
     <button id="closeSquareInfo" onclick="closeSquareInfo()">Close</button>
   </div>
   
-  <script>
+ <script>
     const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxrpdSUwp4El-WKoFrF03R2OSN8-OzHk05L0VsMgJMyGRJCQhAmJiQEYb5HJgOPXiY4LA/exec";
 
     const derbyDate = new Date("2025-05-03T17:00:00-05:00").getTime();
@@ -281,10 +281,18 @@
 
     const selectedSquares = new Set();
     const reservations = [];
+    const reservedDetails = {}; // NEW: Store detailed info per square
 
     function toggleSquare(num) {
       const cell = document.getElementById(`square-${num}`);
-      if (cell.classList.contains("reserved")) return;
+      if (cell.classList.contains("reserved")) {
+        // Show square info popup instead
+        const info = reservedDetails[num];
+        if (info) {
+          showSquareInfo(num, info.name, info.row, info.col, info.date);
+        }
+        return;
+      }
       if (cell.classList.contains("selected")) {
         cell.classList.remove("selected");
         selectedSquares.delete(num);
@@ -308,11 +316,17 @@
       if (!name || !email || !confirmed) return alert("Please complete all fields and confirm payment.");
 
       const initials = name.match(/\b\w/g).join('').toUpperCase();
+      const now = new Date();
+      const timestamp = now.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+
       selectedSquares.forEach(num => {
         const cell = document.getElementById(`square-${num}`);
         cell.classList.remove("selected");
         cell.classList.add("reserved");
         cell.textContent = initials;
+        const row = Math.floor((num - 1) / 10);
+        const col = (num - 1) % 10;
+        reservedDetails[num] = { name, row, col, date: timestamp };
         reservations.push(name);
       });
 
@@ -341,10 +355,10 @@
       resDiv.innerHTML = '<ul>' + [...new Set(reservations)].map(name => `<li>${name}</li>`).join('') + '</ul>';
     }
 
-     function showSquareInfo(num, name, row, col, date) {
+    function showSquareInfo(num, name, row, col, date) {
       document.getElementById("sqNumber").textContent = `Square #${num}`;
       document.getElementById("sqName").textContent = name;
-      document.getElementById("sqCoords").textContent = `Row: ${row} (2nd place), Column: ${col} (1st place)`;
+      document.getElementById("sqCoords").textContent = `Row: ${row + 1} (2nd place), Column: ${col + 1} (1st place)`;
       document.getElementById("sqDate").textContent = date;
       document.getElementById("squareInfoOverlay").style.display = 'block';
       document.getElementById("squareInfoPopup").style.display = 'block';
@@ -357,3 +371,4 @@
   </script>
 </body>
 </html>
+
