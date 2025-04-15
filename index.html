@@ -257,7 +257,11 @@
 
     function toggleSquare(num) {
       const cell = document.getElementById(`square-${num}`);
-      if (cell.classList.contains("reserved")) return;
+      if (cell.classList.contains("reserved")) {
+        const info = reservedDetails[num];
+        if (info) alert(`Reserved by: ${info.name}\nSquares: ${info.squares}\nDate: ${info.date}`);
+        return;
+      }
       if (cell.classList.contains("selected")) {
         cell.classList.remove("selected");
         selectedSquares.delete(num);
@@ -279,39 +283,48 @@
       const email = document.getElementById("email").value;
       const confirmed = document.getElementById("paymentConfirm").checked;
       if (!name || !email || !confirmed) return alert("Please complete all fields and confirm payment.");
-
+    
       const initials = name.match(/\b\w/g).join('').toUpperCase();
       const now = new Date().toLocaleString();
-
+    
       const validSquares = Array.from(selectedSquares).filter(num => !reservedDetails[num]);
       if (validSquares.length === 0) {
         alert("One or more selected squares are no longer available.");
         return;
       }
-
+    
       validSquares.forEach(num => {
         const cell = document.getElementById(`square-${num}`);
         cell.classList.remove("selected");
         cell.classList.add("reserved");
         cell.textContent = initials;
-        reservedDetails[num] = { name, date: now };
+    
+        const row = Math.floor((num - 1) / 10);
+        const col = (num - 1) % 10;
+    
+        reservedDetails[num] = {
+          name,
+          squares: validSquares.join(", "), // can also store individual num here if preferred
+          date: now
+        };
+    
         reservations.push(name);
       });
-
-      fetch(GOOGLE_SHEETS_WEBAPP_URL, {
+    
+      // Send to Google Sheets via doPost-compatible fetch
+      fetch("https://script.google.com/macros/s/AKfycbxrpdSUwp4El-WKoFrF03R2OSN8-OzHk05L0VsMgJMyGRJCQhAmJiQEYb5HJgOPXiY4LA/exec", {
         method: "POST",
-        mode: "no-cors",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: JSON.stringify({
+        body: new URLSearchParams({
           name,
           email,
-          squares: validSquares,
+          squares: validSquares.join(", "),
           date: now
         })
       });
-
+    
       selectedSquares.clear();
       renderReservations();
       document.getElementById("overlay").style.display = 'none';
