@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Olivia's Horse Show Fundraiser</title>
   <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
   <style>
@@ -60,12 +60,14 @@
       margin-bottom: 1em;
       text-align: left;
     }
-    .grid-reserve-container {
+    .grid-area {
       display: flex;
       justify-content: center;
-      align-items: flex-start;
       margin-top: 1em;
       gap: 2em;
+    }
+    .grid-wrapper {
+      display: inline-block;
     }
     table {
       border-collapse: collapse;
@@ -88,15 +90,14 @@
       writing-mode: vertical-rl;
       text-orientation: mixed;
     }
-    .reserved {
-      background-color: #66bb6a;
-      color: white;
-      cursor: not-allowed;
-    }
     .footer {
       margin-top: 2em;
       font-size: 0.9em;
       color: #555;
+    }
+    .reserved {
+      background-color: #66bb6a;
+      color: white;
     }
     #popup {
       position: fixed;
@@ -111,7 +112,7 @@
       display: none;
       z-index: 1000;
     }
-    #popup input, #popup label {
+    #popup input {
       display: block;
       width: 100%;
       margin-bottom: 0.5em;
@@ -127,10 +128,10 @@
       display: none;
       z-index: 999;
     }
-    #reservation-list {
-      text-align: left;
+    .reservation-list {
       max-height: 400px;
       overflow-y: auto;
+      text-align: left;
     }
   </style>
 </head>
@@ -185,27 +186,28 @@
     </div>
   </div>
 
-  <div class="grid-reserve-container">
-    <table id="square-grid">
-      <tr><th></th><th></th><th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th></tr>
-      <tr><th></th><th></th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th></tr>
-      <script>
-        for (let row = 0; row < 10; row++) {
-          document.write('<tr>');
-          if (row === 0) document.write('<th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>');
-          document.write('<th>-</th>');
-          for (let col = 0; col < 10; col++) {
-            let num = row * 10 + col + 1;
-            document.write(`<td id="square-${num}" onclick="reserveSquare(${num})">${num}</td>`);
+  <div class="grid-area">
+    <div class="grid-wrapper">
+      <table id="square-grid">
+        <tr><th></th><th></th><th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th></tr>
+        <tr><th></th><th></th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th></tr>
+        <script>
+          for (let row = 0; row < 10; row++) {
+            document.write('<tr>');
+            if (row === 0) document.write('<th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>');
+            document.write('<th>-</th>');
+            for (let col = 0; col < 10; col++) {
+              let num = row * 10 + col + 1;
+              document.write(`<td id="square-${num}" onclick="reserveSquare(${num})">${num}</td>`);
+            }
+            document.write('</tr>');
           }
-          document.write('</tr>');
-        }
-      </script>
-    </table>
-
-    <div>
+        </script>
+      </table>
+    </div>
+    <div class="reservation-list">
       <h3>Reservations</h3>
-      <ul id="reservation-list"></ul>
+      <ul id="reservationList"></ul>
     </div>
   </div>
 
@@ -218,7 +220,7 @@
     <h3 id="popup-title"></h3>
     <input type="text" id="name" placeholder="Your Name">
     <input type="email" id="email" placeholder="Email Address">
-    <label><input type="checkbox" id="venmo"> I confirm payment via Venmo @Magen-Newman-1</label>
+    <label><input type="checkbox" id="venmoConfirm"> I have paid via Venmo @Magen-Newman-1</label>
     <button onclick="submitReservation()">Reserve</button>
   </div>
 
@@ -236,11 +238,7 @@
     }, 1000);
 
     let selectedSquare = null;
-    let reservations = [];
-
     function reserveSquare(number) {
-      const cell = document.getElementById(`square-${number}`);
-      if (cell.classList.contains("reserved")) return;
       selectedSquare = number;
       document.getElementById("popup-title").textContent = `Reserve Square ${number}`;
       document.getElementById("overlay").style.display = 'block';
@@ -250,33 +248,20 @@
     function submitReservation() {
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
-      const venmoChecked = document.getElementById("venmo").checked;
-
-      if (!name || !email || !venmoChecked || !selectedSquare) return alert("Please fill in all fields and confirm payment.");
-
-      const cell = document.getElementById(`square-${selectedSquare}`);
-      cell.classList.add("reserved");
-      cell.textContent = name.match(/\b\w/g).join('').toUpperCase();
-      cell.onclick = null;
-
-      reservations.push({ square: selectedSquare, name, email });
-      updateReservationList();
-
-      document.getElementById("overlay").style.display = 'none';
-      document.getElementById("popup").style.display = 'none';
-      document.getElementById("name").value = '';
-      document.getElementById("email").value = '';
-      document.getElementById("venmo").checked = false;
-    }
-
-    function updateReservationList() {
-      const list = document.getElementById("reservation-list");
-      list.innerHTML = '';
-      reservations.forEach(r => {
-        const item = document.createElement("li");
-        item.textContent = r.name;
-        list.appendChild(item);
-      });
+      const venmoConfirmed = document.getElementById("venmoConfirm").checked;
+      if (name && email && venmoConfirmed && selectedSquare) {
+        const square = document.getElementById(`square-${selectedSquare}`);
+        square.classList.add("reserved");
+        square.textContent = name.match(/\b\w/g).join('').toUpperCase();
+        const li = document.createElement("li");
+        li.textContent = name;
+        document.getElementById("reservationList").appendChild(li);
+        document.getElementById("popup").style.display = 'none';
+        document.getElementById("overlay").style.display = 'none';
+        document.getElementById("name").value = '';
+        document.getElementById("email").value = '';
+        document.getElementById("venmoConfirm").checked = false;
+      }
     }
   </script>
 </body>
