@@ -265,7 +265,6 @@
   </div>
 
   <script>
-    const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxrpdSUwp4El-WKoFrF03R2OSN8-OzHk05L0VsMgJMyGRJCQhAmJiQEYb5HJgOPXiY4LA/exec";
     const selectedSquares = new Set();
     const reservations = [];
     const reservedDetails = {};
@@ -336,17 +335,19 @@
         reservations.push(name);
       });
     
-      fetch(GOOGLE_SHEETS_WEBAPP_URL, {
+      fetch("https://api.sheetmonkey.io/form/hv62zegnFkrqX3VDj3jnzf", {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-          name,
-          email,
-          squares: validSquares
+          Name: name,
+          Email: email,
+          Squares: Array.from(selectedSquares).join(", "),
+          Date: new Date().toLocaleString()
         })
       });
-    
+      
       selectedSquares.clear();
       renderReservations();
       document.getElementById("overlay").style.display = 'none';
@@ -355,7 +356,6 @@
       document.getElementById("email").value = '';
       document.getElementById("paymentConfirm").checked = false;
     }
-
 
     function renderReservations() {
       const resDiv = document.getElementById("reservations");
