@@ -305,7 +305,7 @@
     
         reservedDetails[num] = {
           name,
-          squares: validSquares.join(", "), // can also store individual num here if preferred
+          squares: JSON.stringify(validSquares),
           date: now
         };
     
