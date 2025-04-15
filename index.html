@@ -343,19 +343,24 @@
       try {
         const response = await fetch(GOOGLE_SHEETS_WEBAPP_URL);
         const data = await response.json();
+    
         data.forEach(entry => {
           const { name, squares, date } = entry;
           const initials = name.match(/\b\w/g).join('').toUpperCase();
-          squares.forEach(num => {
-            const cell = document.getElementById(`square-${num}`);
+    
+          // Split the comma-separated squares string
+          squares.split(",").forEach(num => {
+            const trimmedNum = num.trim();
+            const cell = document.getElementById(`square-${trimmedNum}`);
             if (cell) {
               cell.classList.add("reserved");
               cell.textContent = initials;
-              reservedDetails[num] = { name, date };
+              reservedDetails[trimmedNum] = { name, date };
               reservations.push(name);
             }
           });
         });
+    
         renderReservations();
       } catch (e) {
         console.error("Error loading sheet data:", e);
