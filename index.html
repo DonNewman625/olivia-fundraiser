@@ -80,6 +80,7 @@
       height: 40px;
       text-align: center;
       font-size: 0.9em;
+      cursor: pointer;
     }
     .top-banner-label {
       background: #ffce34;
@@ -93,8 +94,8 @@
     }
     .footer {
       margin-top: 3em;
-      padding: 1em;
-      font-size: 1em;
+      padding: 1.5em;
+      font-size: 1.1em;
       color: #555;
     }
     .reserved {
@@ -135,6 +136,11 @@
       max-height: 400px;
       overflow-y: auto;
       text-align: left;
+    }
+    #reservations ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
     #reserveBtn {
       margin-top: 1em;
@@ -219,7 +225,7 @@
     </div>
     <div>
       <h3>Reservations</h3>
-      <div id="reservations"></div>
+      <div id="reservations"><ul></ul></div>
     </div>
   </div>
 
@@ -238,6 +244,8 @@
   </div>
 
   <script>
+    const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxrySUOxGTtc7WEnlDIdWRuttBLZ_PPbOhWTLSOMbi5MnDlwy3IxFm0LCJ98mVE11aI/exec";
+
     const derbyDate = new Date("2025-05-03T17:00:00-05:00").getTime();
     const countdownEl = document.getElementById("countdown");
     setInterval(() => {
@@ -286,8 +294,19 @@
         cell.textContent = initials;
         reservations.push(name);
       });
-      selectedSquares.clear();
 
+      fetch(GOOGLE_SHEETS_WEBAPP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          squares: Array.from(selectedSquares)
+        })
+      });
+
+      selectedSquares.clear();
       renderReservations();
       document.getElementById("overlay").style.display = 'none';
       document.getElementById("popup").style.display = 'none';
