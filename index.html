@@ -208,7 +208,7 @@
             if (row === 0) document.write('<th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>');
             document.write('<th>-</th>');
             for (let col = 0; col < 10; col++) {
-              let num = row * 10 + col + 1;
+              const num = row * 10 + col + 1;
               document.write(`<td id="square-${num}" onclick="toggleSquare(${num})">${num}</td>`);
             }
             document.write('</tr>');
@@ -238,6 +238,11 @@
   </div>
 
   <script>
+    const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxrpdSUwp4El-WKoFrF03R2OSN8-OzHk05L0VsMgJMyGRJCQhAmJiQEYb5HJgOPXiY4LA/exec";
+    const selectedSquares = new Set();
+    const reservations = [];
+    const reservedDetails = {};
+
     const derbyDate = new Date("2025-05-03T17:00:00-05:00").getTime();
     const countdownEl = document.getElementById("countdown");
     setInterval(() => {
@@ -249,9 +254,6 @@
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
       countdownEl.textContent = `Kentucky Derby Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
-
-    const selectedSquares = new Set();
-    const reservations = [];
 
     function toggleSquare(num) {
       const cell = document.getElementById(`square-${num}`);
@@ -279,15 +281,38 @@
       if (!name || !email || !confirmed) return alert("Please complete all fields and confirm payment.");
 
       const initials = name.match(/\b\w/g).join('').toUpperCase();
-      selectedSquares.forEach(num => {
+      const now = new Date().toLocaleString();
+
+      const validSquares = Array.from(selectedSquares).filter(num => !reservedDetails[num]);
+      if (validSquares.length === 0) {
+        alert("One or more selected squares are no longer available.");
+        return;
+      }
+
+      validSquares.forEach(num => {
         const cell = document.getElementById(`square-${num}`);
         cell.classList.remove("selected");
         cell.classList.add("reserved");
         cell.textContent = initials;
+        reservedDetails[num] = { name, date: now };
         reservations.push(name);
       });
-      selectedSquares.clear();
 
+      fetch(GOOGLE_SHEETS_WEBAPP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          squares: validSquares,
+          date: now
+        })
+      });
+
+      selectedSquares.clear();
       renderReservations();
       document.getElementById("overlay").style.display = 'none';
       document.getElementById("popup").style.display = 'none';
@@ -300,6 +325,31 @@
       const resDiv = document.getElementById("reservations");
       resDiv.innerHTML = '<ul>' + [...new Set(reservations)].map(name => `<li>${name}</li>`).join('') + '</ul>';
     }
+
+    async function loadReservationsFromSheet() {
+      try {
+        const response = await fetch(GOOGLE_SHEETS_WEBAPP_URL);
+        const data = await response.json();
+        data.forEach(entry => {
+          const { name, squares, date } = entry;
+          const initials = name.match(/\b\w/g).join('').toUpperCase();
+          squares.forEach(num => {
+            const cell = document.getElementById(`square-${num}`);
+            if (cell) {
+              cell.classList.add("reserved");
+              cell.textContent = initials;
+              reservedDetails[num] = { name, date };
+              reservations.push(name);
+            }
+          });
+        });
+        renderReservations();
+      } catch (e) {
+        console.error("Error loading sheet data:", e);
+      }
+    }
+
+    window.onload = loadReservationsFromSheet;
   </script>
 </body>
 </html>
