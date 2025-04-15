@@ -403,11 +403,13 @@ async function loadReservationsFromSheet() {
   try {
     const response = await fetch(GOOGLE_SHEETS_WEBAPP_URL);
     const data = await response.json();
+    console.log("Loaded data from Google Sheets:", data);  // ADD THIS
     markReservedSquares(data);
   } catch (err) {
     console.error("Failed to load reservations:", err);
   }
 }
+
 
 
     window.onload = loadReservationsFromSheet;
