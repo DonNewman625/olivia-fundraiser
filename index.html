@@ -347,9 +347,9 @@
           const { name, squares, date } = entry;
           const initials = name.match(/\b\w/g).join('').toUpperCase();
     
-          // Split the comma-separated squares string
-          squares.split(",").forEach(num => {
-            const trimmedNum = num.trim();
+          // squares is already an array
+          squares.forEach(num => {
+            const trimmedNum = num.trim(); // optional, just in case
             const cell = document.getElementById(`square-${trimmedNum}`);
             if (cell) {
               cell.classList.add("reserved");
