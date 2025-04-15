@@ -94,6 +94,7 @@
     .reserved {
       background-color: #66bb6a;
       color: white;
+      pointer-events: none;
     }
     #popup {
       position: fixed;
@@ -132,6 +133,27 @@
       background: rgba(0,0,0,0.3);
       display: none;
       z-index: 999;
+    }
+    #confirmation {
+      margin-top: 1em;
+      color: green;
+      font-weight: bold;
+    }
+    #reservation-log {
+      margin: 2em auto;
+      max-width: 600px;
+      text-align: left;
+      font-size: 0.9em;
+    }
+    #reservation-log h4 {
+      margin-bottom: 0.5em;
+    }
+    #reservation-log ul {
+      list-style: none;
+      padding: 0;
+    }
+    #reservation-log li {
+      margin-bottom: 0.25em;
     }
   </style>
 </head>
@@ -186,6 +208,13 @@
     </table>
   </div>
 
+  <div id="confirmation"></div>
+
+  <div id="reservation-log">
+    <h4>Reservations</h4>
+    <ul id="log-list"></ul>
+  </div>
+
   <div class="footer">
     Created with ❤️ for Olivia — Thanks for supporting her dream!
   </div>
@@ -202,6 +231,8 @@
   <script>
     const derbyDate = new Date("2025-05-03T17:00:00-05:00").getTime();
     const countdownEl = document.getElementById("countdown");
+    const reservationLog = [];
+
     setInterval(() => {
       const now = new Date().getTime();
       const diff = derbyDate - now;
@@ -232,13 +263,30 @@
       }
 
       const square = document.getElementById(`square-${selectedSquare}`);
+      const initials = name.match(/\b\w/g).join('').toUpperCase();
       square.classList.add("reserved");
-      square.textContent = name.match(/\b\w/g).join('').toUpperCase();
+      square.textContent = initials;
+      square.onclick = null;
+
+      reservationLog.push({ square: selectedSquare, name, email, initials });
+      updateLog();
+
+      document.getElementById("confirmation").textContent = `✅ Square ${selectedSquare} reserved by ${initials}`;
       document.getElementById("popup").style.display = 'none';
       document.getElementById("overlay").style.display = 'none';
       document.getElementById("name").value = '';
       document.getElementById("email").value = '';
       document.getElementById("venmo-check").checked = false;
+    }
+
+    function updateLog() {
+      const list = document.getElementById("log-list");
+      list.innerHTML = "";
+      reservationLog.forEach(r => {
+        const li = document.createElement("li");
+        li.textContent = `Square ${r.square}: ${r.initials} (${r.email})`;
+        list.appendChild(li);
+      });
     }
   </script>
 </body>
