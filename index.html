@@ -179,7 +179,7 @@
         <ul>
           <li>10×10 grid = 100 squares</li>
           <li>$10 per square</li>
-          <li>$500 to the winner</li>
+          <li><strong style="color:#d32f2f;">$500 prize</strong> to the winner</li>
           <li>$500 goes towards show season</li>
           <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
         </ul>
@@ -199,7 +199,7 @@
           <li>Winning square is based on the last digit of the horses' numbers</li>
           <li>Columns = 🥇 1st place finishers</li>
           <li>Rows = 🥈 2nd place finishers</li>
-          <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square <strong>(2, 4)</strong> wins</li>
+          <li>Example: If horse #12 wins 🥇 and #4 comes 🥈 → square <strong>(2, 4)</strong> wins</li>
         </ul>
       </div>
       <div class="card">
@@ -225,7 +225,7 @@
             if (row === 0) document.write('<th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>');
             document.write('<th>-</th>');
             for (let col = 0; col < 10; col++) {
-              let num = row * 10 + col + 1;
+              const num = row * 10 + col + 1;
               document.write(`<td id="square-${num}" onclick="toggleSquare(${num})">${num}</td>`);
             }
             document.write('</tr>');
@@ -263,9 +263,12 @@
     <p><strong>Date Purchased:</strong> <span id="sqDate"></span></p>
     <button id="closeSquareInfo" onclick="closeSquareInfo()">Close</button>
   </div>
-  
- <script>
-    const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxrpdSUwp4El-WKoFrF03R2OSN8-OzHk05L0VsMgJMyGRJCQhAmJiQEYb5HJgOPXiY4LA/exec";
+
+  <script>
+    const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/1Ka3cenQpTZww6ZLfzE1MTV3QMsolz3iQ7eqZTa_0z_njpUshyNMshOmM/exec";
+    const selectedSquares = new Set();
+    const reservations = [];
+    const reservedDetails = {};
 
     const derbyDate = new Date("2025-05-03T17:00:00-05:00").getTime();
     const countdownEl = document.getElementById("countdown");
@@ -279,18 +282,11 @@
       countdownEl.textContent = `Kentucky Derby Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
 
-    const selectedSquares = new Set();
-    const reservations = [];
-    const reservedDetails = {}; // NEW: Store detailed info per square
-
     function toggleSquare(num) {
       const cell = document.getElementById(`square-${num}`);
       if (cell.classList.contains("reserved")) {
-        // Show square info popup instead
         const info = reservedDetails[num];
-        if (info) {
-          showSquareInfo(num, info.name, info.row, info.col, info.date);
-        }
+        if (info) showSquareInfo(num, info.name, info.row, info.col, info.date);
         return;
       }
       if (cell.classList.contains("selected")) {
@@ -316,17 +312,17 @@
       if (!name || !email || !confirmed) return alert("Please complete all fields and confirm payment.");
 
       const initials = name.match(/\b\w/g).join('').toUpperCase();
-      const now = new Date();
-      const timestamp = now.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+      const now = new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
 
       selectedSquares.forEach(num => {
         const cell = document.getElementById(`square-${num}`);
         cell.classList.remove("selected");
         cell.classList.add("reserved");
         cell.textContent = initials;
+
         const row = Math.floor((num - 1) / 10);
         const col = (num - 1) % 10;
-        reservedDetails[num] = { name, row, col, date: timestamp };
+        reservedDetails[num] = { name, row, col, date: now };
         reservations.push(name);
       });
 
@@ -358,7 +354,7 @@
     function showSquareInfo(num, name, row, col, date) {
       document.getElementById("sqNumber").textContent = `Square #${num}`;
       document.getElementById("sqName").textContent = name;
-      document.getElementById("sqCoords").textContent = `Row: ${row + 1} (2nd place), Column: ${col + 1} (1st place)`;
+      document.getElementById("sqCoords").textContent = `Row: ${row + 1} (2nd), Column: ${col + 1} (1st)`;
       document.getElementById("sqDate").textContent = date;
       document.getElementById("squareInfoOverlay").style.display = 'block';
       document.getElementById("squareInfoPopup").style.display = 'block';
@@ -369,46 +365,31 @@
       document.getElementById("squareInfoPopup").style.display = 'none';
     }
 
-  const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxrpdSUwp4El-WKoFrF03R2OSN8-OzHk05L0VsMgJMyGRJCQhAmJiQEYb5HJgOPXiY4LA/exec";
-
-  const selectedSquares = new Set();
-  const reservations = [];
-  const reservedDetails = {};
-
-  // Load reservations from Google Sheets on page load
-  async function loadReservationsFromSheet() {
-    try {
-      const response = await fetch(GOOGLE_SHEETS_WEBAPP_URL);
-      const data = await response.json();
-
-      data.forEach(entry => {
-        const { name, email, squares, date } = entry;
-        squares.forEach(num => {
-          const cell = document.getElementById(`square-${num}`);
-          if (!cell) return;
-
-          const row = Math.floor((num - 1) / 10);
-          const col = (num - 1) % 10;
-          const initials = name.match(/\b\w/g).join('').toUpperCase();
-
-          cell.textContent = initials;
-          cell.classList.add("reserved");
-
-          reservedDetails[num] = { name, row, col, date };
-          reservations.push(name);
+    async function loadReservationsFromSheet() {
+      try {
+        const res = await fetch(GOOGLE_SHEETS_WEBAPP_URL);
+        const data = await res.json();
+        data.forEach(entry => {
+          const { name, squares, date } = entry;
+          squares.forEach(num => {
+            const cell = document.getElementById(`square-${num}`);
+            if (!cell) return;
+            const initials = name.match(/\b\w/g).join('').toUpperCase();
+            const row = Math.floor((num - 1) / 10);
+            const col = (num - 1) % 10;
+            cell.textContent = initials;
+            cell.classList.add("reserved");
+            reservedDetails[num] = { name, row, col, date };
+            reservations.push(name);
+          });
         });
-      });
-
-      renderReservations();
-    } catch (err) {
-      console.error("Failed to load reservations:", err);
+        renderReservations();
+      } catch (e) {
+        console.error("Error loading reservations from sheet", e);
+      }
     }
-  }
 
-  // Run it on page load
-  window.onload = loadReservationsFromSheet;
-   
+    window.onload = loadReservationsFromSheet;
   </script>
 </body>
 </html>
-
