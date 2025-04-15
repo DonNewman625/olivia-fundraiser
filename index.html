@@ -319,7 +319,7 @@
         body: new URLSearchParams({
           name,
           email,
-          squares: JSON.stringify(validSquares),  // instead of validSquares.join(", ")
+          squares: validSquares.join(","), // ✅ This sends "1,2"
           date: now
         })
       });
