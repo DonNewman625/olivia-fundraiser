@@ -368,6 +368,46 @@
       document.getElementById("squareInfoOverlay").style.display = 'none';
       document.getElementById("squareInfoPopup").style.display = 'none';
     }
+
+  const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxrpdSUwp4El-WKoFrF03R2OSN8-OzHk05L0VsMgJMyGRJCQhAmJiQEYb5HJgOPXiY4LA/exec";
+
+  const selectedSquares = new Set();
+  const reservations = [];
+  const reservedDetails = {};
+
+  // Load reservations from Google Sheets on page load
+  async function loadReservationsFromSheet() {
+    try {
+      const response = await fetch(GOOGLE_SHEETS_WEBAPP_URL);
+      const data = await response.json();
+
+      data.forEach(entry => {
+        const { name, email, squares, date } = entry;
+        squares.forEach(num => {
+          const cell = document.getElementById(`square-${num}`);
+          if (!cell) return;
+
+          const row = Math.floor((num - 1) / 10);
+          const col = (num - 1) % 10;
+          const initials = name.match(/\b\w/g).join('').toUpperCase();
+
+          cell.textContent = initials;
+          cell.classList.add("reserved");
+
+          reservedDetails[num] = { name, row, col, date };
+          reservations.push(name);
+        });
+      });
+
+      renderReservations();
+    } catch (err) {
+      console.error("Failed to load reservations:", err);
+    }
+  }
+
+  // Run it on page load
+  window.onload = loadReservationsFromSheet;
+   
   </script>
 </body>
 </html>
