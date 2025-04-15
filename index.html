@@ -33,39 +33,43 @@
       font-weight: bold;
       color: #2e7d32;
     }
-    .info-container {
+    .container {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      margin: 2em auto;
-      max-width: 1200px;
-      gap: 2em;
-      align-items: flex-start;
+      margin-top: 1em;
     }
     .photo {
-      max-width: 300px;
+      max-width: 250px;
+      margin-right: 2em;
       border-radius: 8px;
       object-fit: cover;
       aspect-ratio: 3 / 4;
+    }
+    .info {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      justify-content: space-between;
     }
     .card {
       background: white;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       padding: 1em;
-      width: 400px;
+      width: 45%;
+      margin-bottom: 1em;
       text-align: left;
     }
-    .card ul {
-      margin-top: 0.5em;
+    .main-section {
+      display: flex;
+      justify-content: center;
+      margin-top: 2em;
+      gap: 2em;
     }
     .grid-wrapper {
       display: flex;
-      justify-content: center;
-      margin: 2em auto;
-      gap: 2em;
-      flex-wrap: wrap;
-      max-width: 1000px;
+      flex-direction: column;
+      align-items: center;
     }
     table {
       border-collapse: collapse;
@@ -87,16 +91,21 @@
       writing-mode: vertical-rl;
       text-orientation: mixed;
     }
+    .footer {
+      margin-top: 3em;
+      padding: 1em;
+      font-size: 1em;
+      color: #555;
+    }
     .reserved {
       background-color: #66bb6a;
       color: white;
-      cursor: pointer;
     }
     .selected {
       background-color: orange;
       color: white;
     }
-    #popup, #overlay, #squareInfoOverlay, #squareInfoPopup {
+    #popup, #overlay {
       position: fixed;
       top: 50%;
       left: 50%;
@@ -114,7 +123,7 @@
       margin-bottom: 0.5em;
       padding: 0.5em;
     }
-    #overlay, #squareInfoOverlay {
+    #overlay {
       top: 0;
       left: 0;
       width: 100%;
@@ -136,19 +145,6 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    #squareInfoPopup {
-      max-width: 300px;
-      text-align: left;
-    }
-    #closeSquareInfo {
-      margin-top: 1em;
-      background-color: #388e3c;
-      color: white;
-      border: none;
-      padding: 0.5em 1em;
-      border-radius: 4px;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
@@ -158,50 +154,92 @@
   </div>
   <div class="countdown-banner" id="countdown">Kentucky Derby Countdown: Loading...</div>
 
-  <div class="info-container">
+  <div class="container">
     <img src="olivia1.jpg" class="photo" alt="Olivia riding horse" />
-    <div class="card">
-      <h3>🐴 Game Overview</h3>
-      <ul>
-        <li>10×10 grid = 100 squares</li>
-        <li>$10 per square</li>
-        <li><span style="color:#d32f2f; font-weight:bold;">$500 prize</span> to the winner</li>
-        <li>$500 goes towards show season</li>
-        <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>📨 How to Join</h3>
-      <ul>
-        <li>Pick your square(s) on the grid below</li>
-        <li>Click "Reserve Selected Squares" to fill out the form</li>
-        <li>Venmo @Magen-Newman-1 $10 per square or pay with cash</li>
-        <li>Add a 🏏 emoji and your email in the Venmo note</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>⚔️ How to Win</h3>
-      <ul>
-        <li>Winning square is based on the last digit of the horses' numbers</li>
-        <li>Columns = 🥇 1st place finishers</li>
-        <li>Rows = 🥈 2nd place finishers</li>
-        <li>Example: If horse #12 wins 🥇 and #4 comes 🥈 → square <strong>(2, 4)</strong> wins</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>🥇 Multiple Ways to Win</h3>
-      <ul>
-        <li>🥇 Horse #2 and 🥈 Horse #4</li>
-        <li>🥇 Horse #2 and 🥈 Horse #14</li>
-        <li>🥇 Horse #12 and 🥈 Horse #4</li>
-        <li>🥇 Horse #12 and 🥈 Horse #14</li>
-      </ul>
+    <div class="info">
+      <div class="card">
+        <h3>🐴 Game Overview</h3>
+        <ul>
+          <li>10×10 grid = 100 squares</li>
+          <li>$10 per square</li>
+          <li>$500 to the winner</li>
+          <li>$500 goes towards show season</li>
+          <li>Once full, numbers (0–9) are randomly assigned to rows and columns</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📨 How to Join</h3>
+        <ul>
+          <li>Pick your square(s) on the grid below</li>
+          <li>Click "Reserve Selected Squares" to fill out the form</li>
+          <li>Venmo @Magen-Newman-1 $10 per square or pay with cash</li>
+          <li>Add a 🏏 emoji and your email in the Venmo note</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>⚔️ How to Win</h3>
+        <ul>
+          <li>Winning square is based on the last digit of the horses' numbers</li>
+          <li>Columns = 🥇 1st place finishers</li>
+          <li>Rows = 🥈 2nd place finishers</li>
+          <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square <strong>(2, 4)</strong> wins</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🥇 Multiple Ways to Win</h3>
+        <ul>
+          <li>🥇 Horse #2 and 🥈 Horse #4</li>
+          <li>🥇 Horse #2 and 🥈 Horse #14</li>
+          <li>🥇 Horse #12 and 🥈 Horse #4</li>
+          <li>🥇 Horse #12 and 🥈 Horse #14</li>
+        </ul>
+      </div>
     </div>
   </div>
 
+  <div class="main-section">
+    <div class="grid-wrapper">
+      <table id="square-grid">
+        <tr><th></th><th></th><th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th></tr>
+        <tr><th></th><th></th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th></tr>
+        <script>
+          for (let row = 0; row < 10; row++) {
+            document.write('<tr>');
+            if (row === 0) document.write('<th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>');
+            document.write('<th>-</th>');
+            for (let col = 0; col < 10; col++) {
+              let num = row * 10 + col + 1;
+              document.write(`<td id="square-${num}" onclick="toggleSquare(${num})">${num}</td>`);
+            }
+            document.write('</tr>');
+          }
+        </script>
+      </table>
+      <button id="reserveBtn" onclick="showPopup()">Reserve Selected Squares</button>
+    </div>
+    <div>
+      <h3>Reservations</h3>
+      <div id="reservations"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Created with ❤️ for Olivia — Thanks for supporting her dream!
+  </div>
+
+  <div id="overlay"></div>
+  <div id="popup">
+    <h3 id="popup-title">Reservation</h3>
+    <input type="text" id="name" placeholder="Your Name">
+    <input type="email" id="email" placeholder="Email Address">
+    <label><input type="checkbox" id="paymentConfirm"> I confirm I paid via Venmo @Magen-Newman-1 or cash</label>
+    <br><br>
+    <button onclick="submitReservation()">Reserve</button>
+  </div>
+
   <script>
-    const countdownEl = document.getElementById("countdown");
     const derbyDate = new Date("2025-05-03T17:00:00-05:00").getTime();
+    const countdownEl = document.getElementById("countdown");
     setInterval(() => {
       const now = new Date().getTime();
       const diff = derbyDate - now;
@@ -211,6 +249,57 @@
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
       countdownEl.textContent = `Kentucky Derby Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
+
+    const selectedSquares = new Set();
+    const reservations = [];
+
+    function toggleSquare(num) {
+      const cell = document.getElementById(`square-${num}`);
+      if (cell.classList.contains("reserved")) return;
+      if (cell.classList.contains("selected")) {
+        cell.classList.remove("selected");
+        selectedSquares.delete(num);
+      } else {
+        cell.classList.add("selected");
+        selectedSquares.add(num);
+      }
+    }
+
+    function showPopup() {
+      if (selectedSquares.size === 0) return alert("Please select at least one square.");
+      document.getElementById("popup-title").textContent = `Reserving squares: ${Array.from(selectedSquares).join(', ')}`;
+      document.getElementById("overlay").style.display = 'block';
+      document.getElementById("popup").style.display = 'block';
+    }
+
+    function submitReservation() {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const confirmed = document.getElementById("paymentConfirm").checked;
+      if (!name || !email || !confirmed) return alert("Please complete all fields and confirm payment.");
+
+      const initials = name.match(/\b\w/g).join('').toUpperCase();
+      selectedSquares.forEach(num => {
+        const cell = document.getElementById(`square-${num}`);
+        cell.classList.remove("selected");
+        cell.classList.add("reserved");
+        cell.textContent = initials;
+        reservations.push(name);
+      });
+      selectedSquares.clear();
+
+      renderReservations();
+      document.getElementById("overlay").style.display = 'none';
+      document.getElementById("popup").style.display = 'none';
+      document.getElementById("name").value = '';
+      document.getElementById("email").value = '';
+      document.getElementById("paymentConfirm").checked = false;
+    }
+
+    function renderReservations() {
+      const resDiv = document.getElementById("reservations");
+      resDiv.innerHTML = '<ul>' + [...new Set(reservations)].map(name => `<li>${name}</li>`).join('') + '</ul>';
+    }
   </script>
 </body>
 </html>
