@@ -60,14 +60,20 @@
       margin-bottom: 1em;
       text-align: left;
     }
-    .grid-section {
+    .grid-wrapper {
       display: flex;
       justify-content: center;
       margin-top: 1em;
-      gap: 2em;
     }
-    .grid-wrapper {
+    .grid-container {
       display: flex;
+      justify-content: center;
+    }
+    .reservation-list {
+      margin-left: 2em;
+      text-align: left;
+      max-height: 400px;
+      overflow-y: auto;
     }
     table {
       border-collapse: collapse;
@@ -111,9 +117,8 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       display: none;
       z-index: 1000;
-      width: 300px;
     }
-    #popup input, #popup button {
+    #popup input, #popup label {
       display: block;
       width: 100%;
       margin-bottom: 0.5em;
@@ -128,11 +133,6 @@
       background: rgba(0,0,0,0.3);
       display: none;
       z-index: 999;
-    }
-    #reservations-list {
-      max-height: 400px;
-      overflow-y: auto;
-      text-align: left;
     }
   </style>
 </head>
@@ -165,15 +165,35 @@
           <li>Add a 🐎 emoji and your email in the Venmo note</li>
         </ul>
       </div>
+      <div class="card">
+        <h3>⚔️ How to Win</h3>
+        <ul>
+          <li>Winning square is based on the last digit of the horses' numbers</li>
+          <li>Columns = 🥇 1st place finishers</li>
+          <li>Rows = 🥈 2nd place finishers</li>
+          <li>Example: If horse #12 wins 🥇 1st and #4 comes 🥈 2nd → square <strong>(2, 4)</strong> wins</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🥇 Multiple Ways to Win</h3>
+        <ul>
+          <li>🥇 Horse #2 and 🥈 Horse #4</li>
+          <li>🥇 Horse #2 and 🥈 Horse #14</li>
+          <li>🥇 Horse #12 and 🥈 Horse #4</li>
+          <li>🥇 Horse #12 and 🥈 Horse #14</li>
+        </ul>
+        <div class="see-example-result">See Example Result</div>
+      </div>
     </div>
   </div>
 
-  <div class="grid-section">
+  <div class="grid-container">
     <div class="grid-wrapper">
       <table id="square-grid">
         <tr><th></th><th></th><th colspan="10" class="top-banner-label">🥇 1st PLACE HORSE WINNER</th></tr>
         <tr><th></th><th></th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th></tr>
         <script>
+          const reservations = [];
           for (let row = 0; row < 10; row++) {
             document.write('<tr>');
             if (row === 0) document.write('<th rowspan="10" class="left-banner-label">🥈 2nd PLACE HORSE WINNER</th>');
@@ -187,10 +207,9 @@
         </script>
       </table>
     </div>
-
-    <div>
-      <h3>Reservations</h3>
-      <ul id="reservations-list"></ul>
+    <div class="reservation-list">
+      <h4>Reservations</h4>
+      <ul id="reservation-log"></ul>
     </div>
   </div>
 
@@ -203,7 +222,7 @@
     <h3 id="popup-title"></h3>
     <input type="text" id="name" placeholder="Your Name">
     <input type="email" id="email" placeholder="Email Address">
-    <label><input type="checkbox" id="confirm" /> I will Venmo @Magen-Newman-1 $10</label>
+    <label><input type="checkbox" id="venmoConfirm"> I will Venmo @Magen-Newman-1 $10 for 1 square</label>
     <button onclick="submitReservation()">Reserve</button>
   </div>
 
@@ -222,8 +241,8 @@
 
     let selectedSquare = null;
     function reserveSquare(number) {
-      const cell = document.getElementById(`square-${number}`);
-      if (cell.classList.contains("reserved")) return;
+      const square = document.getElementById(`square-${number}`);
+      if (square.classList.contains("reserved")) return;
       selectedSquare = number;
       document.getElementById("popup-title").textContent = `Reserve Square ${number}`;
       document.getElementById("overlay").style.display = 'block';
@@ -233,21 +252,23 @@
     function submitReservation() {
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
-      const confirm = document.getElementById("confirm").checked;
-      if (name && email && confirm && selectedSquare) {
+      const venmoConfirmed = document.getElementById("venmoConfirm").checked;
+      if (name && email && selectedSquare && venmoConfirmed) {
         const square = document.getElementById(`square-${selectedSquare}`);
         square.classList.add("reserved");
         square.textContent = name.match(/\b\w/g).join('').toUpperCase();
+        square.onclick = null;
 
-        const listItem = document.createElement("li");
-        listItem.textContent = name;
-        document.getElementById("reservations-list").appendChild(listItem);
+        const log = document.getElementById("reservation-log");
+        const li = document.createElement("li");
+        li.textContent = `${name}`;
+        log.appendChild(li);
 
         document.getElementById("popup").style.display = 'none';
         document.getElementById("overlay").style.display = 'none';
         document.getElementById("name").value = '';
         document.getElementById("email").value = '';
-        document.getElementById("confirm").checked = false;
+        document.getElementById("venmoConfirm").checked = false;
       }
     }
   </script>
