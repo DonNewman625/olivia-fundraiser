@@ -347,9 +347,9 @@
           const { name, squares, date } = entry;
           const initials = name.match(/\b\w/g).join('').toUpperCase();
     
-          // squares is already an array
-          squares.forEach(num => {
-            const trimmedNum = num.trim(); // optional, just in case
+          // Ensure squares is an array and each value is string-trimmed
+          (Array.isArray(squares) ? squares : []).forEach(num => {
+            const trimmedNum = String(num).trim();
             const cell = document.getElementById(`square-${trimmedNum}`);
             if (cell) {
               cell.classList.add("reserved");
