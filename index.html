@@ -349,7 +349,7 @@
     
           // Ensure squares is an array and each value is string-trimmed
           (Array.isArray(squares) ? squares : []).forEach(num => {
-            const trimmedNum = String(num).trim();
+            const trimmedNum = String(num).trim().replace(/^\[|\]$/g, "");
             const cell = document.getElementById(`square-${trimmedNum}`);
             if (cell) {
               cell.classList.add("reserved");
