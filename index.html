@@ -105,6 +105,29 @@
       background-color: orange;
       color: white;
     }
+    #popup {
+      background: white;
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 400px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+      z-index: 10;
+    }
+    #popup .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
     #popup, #overlay {
       position: fixed;
       top: 50%;
@@ -229,13 +252,18 @@
 
   <div id="overlay"></div>
   <div id="popup">
-    <h3 id="popup-title">Reservation</h3>
-    <input type="text" id="name" placeholder="Your Name">
-    <input type="email" id="email" placeholder="Email Address">
-    <label><input type="checkbox" id="paymentConfirm"> I confirm I paid via Venmo @Magen-Newman-1 or cash</label>
-    <br><br>
-    <button onclick="submitReservation()">Reserve</button>
-  </div>
+  <span class="close-btn" onclick="hidePopup()">×</span>
+  <h3 id="popup-title">Reservation</h3>
+  <input type="text" id="name" placeholder="Your Name" />
+  <input type="email" id="email" placeholder="Email Address" />
+  <br />
+  <label>
+    <input type="checkbox" id="paymentConfirm" />
+    I confirm I paid via Venmo @Magen-Newman-1 or cash
+  </label>
+  <br />
+  <button onclick="submitReservation()">Reserve</button>
+</div>
 
   <script>
     const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwRis8Z8lWZM3fGQyZoK8MipYGRZJUEmyVVFqR8ywdIZU5VxV8j_lHm3lHaMdEznpOHJA/exec";
@@ -276,6 +304,10 @@
       document.getElementById("popup-title").textContent = `Reserving squares: ${Array.from(selectedSquares).join(', ')}`;
       document.getElementById("overlay").style.display = 'block';
       document.getElementById("popup").style.display = 'block';
+    }
+    function hidePopup() {
+      document.getElementById("overlay").style.display = "none";
+      document.getElementById("popup").style.display = "none";
     }
 
     function submitReservation() {
